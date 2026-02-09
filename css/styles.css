@@ -1,0 +1,1145 @@
+/* ============================================
+   COSMIC VOYAGE - Space Theme Stylesheet
+   Dark cosmic colors, nebulas, animations
+   ============================================ */
+
+/* CSS Variables - Cosmic Color Palette */
+:root {
+    --deep-space: #050508;
+    --cosmic-black: #0a0a0f;
+    --nebula-purple: #1a0b2e;
+    --nebula-blue: #0d1b2a;
+    --nebula-pink: #2d1b4e;
+    --star-white: #ffffff;
+    --star-gold: #ffd700;
+    --star-blue: #87ceeb;
+    --planet-orange: #ff6b35;
+    --planet-red: #e63946;
+    --planet-blue: #457b9d;
+    --planet-green: #2a9d8f;
+    --accent-cyan: #00d4ff;
+    --accent-purple: #9d4edd;
+    --text-primary: #f8f9fa;
+    --text-secondary: #adb5bd;
+    --text-muted: #6c757d;
+    --gradient-cosmic: linear-gradient(135deg, var(--nebula-purple) 0%, var(--nebula-blue) 50%, var(--nebula-pink) 100%);
+    --gradient-hero: linear-gradient(180deg, var(--deep-space) 0%, var(--nebula-purple) 100%);
+    --font-display: 'Orbitron', sans-serif;
+    --font-body: 'Exo 2', sans-serif;
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Reset & Base */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-body);
+    background: var(--deep-space);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+/* Starfield Canvas */
+#starfield {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* ============================================
+   NAVIGATION
+   ============================================ */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: rgba(5, 5, 8, 0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: var(--transition-smooth);
+}
+
+.navbar.scrolled {
+    background: rgba(5, 5, 8, 0.95);
+    box-shadow: 0 4px 30px rgba(0, 212, 255, 0.1);
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.25rem;
+    transition: var(--transition-smooth);
+}
+
+.nav-logo:hover {
+    color: var(--accent-cyan);
+}
+
+.logo-icon {
+    font-size: 1.5rem;
+    animation: float 3s ease-in-out infinite;
+}
+
+.logo-text {
+    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 500;
+    position: relative;
+    padding: 0.5rem 0;
+    transition: var(--transition-smooth);
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+    transition: var(--transition-smooth);
+}
+
+.nav-link:hover {
+    color: var(--accent-cyan);
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* Hamburger Menu */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 5px;
+}
+
+.bar {
+    width: 25px;
+    height: 2px;
+    background: var(--text-primary);
+    transition: var(--transition-smooth);
+}
+
+.hamburger.active .bar:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger.active .bar:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active .bar:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 6rem 2rem 4rem;
+    background: var(--gradient-hero);
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(ellipse at 20% 80%, rgba(157, 78, 221, 0.3) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(0, 212, 255, 0.2) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(255, 107, 53, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.hero-content {
+    max-width: 1400px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-text {
+    animation: fadeInUp 1s ease-out;
+}
+
+.hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+}
+
+.title-line {
+    display: block;
+    color: var(--text-primary);
+}
+
+.title-line.cosmic {
+    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple), var(--planet-orange));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    background-size: 200% auto;
+    animation: gradientShift 5s ease infinite;
+}
+
+.hero-tagline {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    max-width: 500px;
+    margin-bottom: 2rem;
+    line-height: 1.8;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+/* Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: var(--transition-bounce);
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 212, 255, 0.6);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--text-primary);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.btn-secondary:hover {
+    border-color: var(--accent-cyan);
+    color: var(--accent-cyan);
+    transform: translateY(-3px);
+}
+
+/* Hero Visual - Animated Planet */
+.hero-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 1.5s ease-out 0.5s both;
+}
+
+.planet-container {
+    position: relative;
+    width: 300px;
+    height: 300px;
+}
+
+.planet-main {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--planet-orange), var(--planet-red), var(--accent-purple));
+    box-shadow: 
+        0 0 60px rgba(255, 107, 53, 0.5),
+        inset -20px -20px 40px rgba(0, 0, 0, 0.3),
+        inset 20px 20px 40px rgba(255, 255, 255, 0.1);
+    animation: planetRotate 20s linear infinite;
+}
+
+.ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) rotateX(75deg);
+}
+
+.ring-1 {
+    width: 220px;
+    height: 220px;
+    animation: ringRotate 30s linear infinite;
+}
+
+.ring-2 {
+    width: 280px;
+    height: 280px;
+    border-color: rgba(0, 212, 255, 0.15);
+    animation: ringRotate 40s linear infinite reverse;
+}
+
+.moon {
+    position: absolute;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #c0c0c0, #808080);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.moon-1 {
+    width: 25px;
+    height: 25px;
+    animation: orbit1 8s linear infinite;
+}
+
+.moon-2 {
+    width: 15px;
+    height: 15px;
+    animation: orbit2 12s linear infinite;
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    animation: bounce 2s infinite;
+    cursor: pointer;
+}
+
+.scroll-arrow {
+    width: 24px;
+    height: 24px;
+    border-right: 2px solid var(--accent-cyan);
+    border-bottom: 2px solid var(--accent-cyan);
+    transform: rotate(45deg);
+}
+
+/* ============================================
+   SECTION STYLES
+   ============================================ */
+section {
+    padding: 6rem 2rem;
+    position: relative;
+}
+
+.section-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 4rem;
+}
+
+.section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: linear-gradient(90deg, var(--text-primary), var(--accent-cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.section-subtitle {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+}
+
+/* ============================================
+   SOLAR SYSTEM SECTION
+   ============================================ */
+.solar-system {
+    background: var(--cosmic-black);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.solar-container {
+    position: relative;
+    width: min(800px, 90vw);
+    height: min(800px, 90vw);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sun {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #ffd700, #ff8c00, #ff4500);
+    box-shadow: 
+        0 0 60px rgba(255, 215, 0, 0.6),
+        0 0 120px rgba(255, 140, 0, 0.4),
+        0 0 180px rgba(255, 69, 0, 0.2);
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: sunPulse 4s ease-in-out infinite;
+}
+
+.sun-label {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    color: white;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.sun:hover .sun-label {
+    opacity: 1;
+}
+
+.orbit {
+    position: absolute;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.orbit-mercury { width: 140px; height: 140px; }
+.orbit-venus { width: 190px; height: 190px; }
+.orbit-earth { width: 250px; height: 250px; }
+.orbit-mars { width: 320px; height: 320px; }
+.orbit-jupiter { width: 450px; height: 450px; }
+.orbit-saturn { width: 580px; height: 580px; }
+.orbit-uranus { width: 700px; height: 700px; }
+.orbit-neptune { width: 780px; height: 780px; }
+
+.planet-body {
+    position: absolute;
+    right: -6px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    animation: orbitRotate linear infinite;
+}
+
+.planet-body:hover {
+    transform: scale(1.5);
+    z-index: 100;
+}
+
+.planet-body.mercury { 
+    width: 12px; height: 12px; 
+    background: radial-gradient(circle at 30% 30%, #a0a0a0, #696969);
+    animation-duration: 4s;
+}
+.planet-body.venus { 
+    width: 18px; height: 18px; 
+    background: radial-gradient(circle at 30% 30%, #ffc649, #d4af37);
+    animation-duration: 7s;
+}
+.planet-body.earth { 
+    width: 20px; height: 20px; 
+    background: radial-gradient(circle at 30% 30%, #6b93d6, #1e3a5f);
+    animation-duration: 10s;
+}
+.planet-body.mars { 
+    width: 16px; height: 16px; 
+    background: radial-gradient(circle at 30% 30%, #ff6b6b, #c92a2a);
+    animation-duration: 15s;
+}
+.planet-body.jupiter { 
+    width: 45px; height: 45px; 
+    background: linear-gradient(180deg, #d4a574 0%, #c18e5c 20%, #d4a574 40%, #a67c52 60%, #d4a574 80%, #c18e5c 100%);
+    animation-duration: 25s;
+}
+.planet-body.saturn { 
+    width: 38px; height: 38px; 
+    background: radial-gradient(circle at 30% 30%, #fad5a5, #d4af37);
+    animation-duration: 35s;
+    right: -10px;
+}
+.planet-body.uranus { 
+    width: 28px; height: 28px; 
+    background: radial-gradient(circle at 30% 30%, #7de3f4, #4fd0e7);
+    animation-duration: 50s;
+}
+.planet-body.neptune { 
+    width: 26px; height: 26px; 
+    background: radial-gradient(circle at 30% 30%, #5b7cff, #3b5bdb);
+    animation-duration: 65s;
+}
+
+.saturn-rings {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotateX(75deg);
+    width: 70px;
+    height: 70px;
+    border: 8px solid rgba(212, 175, 55, 0.6);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+/* Planet Tooltip */
+.planet-tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-10px);
+    background: rgba(10, 10, 15, 0.95);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.planet-body:hover .planet-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(-15px);
+}
+
+.planet-tooltip h3 {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    color: var(--accent-cyan);
+    margin-bottom: 0.25rem;
+}
+
+.planet-tooltip p {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.25rem;
+}
+
+.planet-tooltip .temp {
+    font-size: 0.7rem;
+    color: var(--planet-orange);
+}
+
+/* Planet Info Panel */
+.planet-info-panel {
+    max-width: 600px;
+    width: 90%;
+    margin-top: 3rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 2rem;
+    backdrop-filter: blur(10px);
+    transition: var(--transition-smooth);
+}
+
+.planet-info-panel.active {
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.2);
+}
+
+.info-content {
+    position: relative;
+}
+
+.close-info {
+    position: absolute;
+    top: -1rem;
+    right: -1rem;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.close-info:hover {
+    color: var(--planet-red);
+}
+
+#info-name {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--accent-cyan);
+    margin-bottom: 1rem;
+}
+
+.info-stats {
+    color: var(--text-secondary);
+    line-height: 1.8;
+}
+
+.info-stats p {
+    margin-bottom: 0.5rem;
+}
+
+/* ============================================
+   FACTS SECTION
+   ============================================ */
+.facts {
+    background: var(--gradient-cosmic);
+    position: relative;
+    overflow: hidden;
+}
+
+.facts::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 10% 20%, rgba(157, 78, 221, 0.2) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(0, 212, 255, 0.2) 0%, transparent 40%);
+    pointer-events: none;
+}
+
+.facts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+.fact-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition-smooth);
+    cursor: pointer;
+}
+
+.fact-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(157, 78, 221, 0.1));
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.fact-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(0, 212, 255, 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.fact-card:hover::before {
+    opacity: 1;
+}
+
+.fact-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.fact-title {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+}
+
+.fact-text {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+.fact-glow {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, rgba(0, 212, 255, 0.3), transparent 70%);
+    top: -50px;
+    right: -50px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.fact-card:hover .fact-glow {
+    opacity: 1;
+}
+
+/* ============================================
+   CONTACT SECTION
+   ============================================ */
+.contact {
+    background: var(--deep-space);
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.contact-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.contact-text {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Contact Form */
+.contact-form {
+    max-width: 500px;
+    margin: 0 auto 3rem;
+}
+
+.form-group {
+    display: flex;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    padding: 0.5rem;
+    transition: var(--transition-smooth);
+}
+
+.form-group:focus-within {
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+}
+
+.form-group input {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: 0.75rem 1rem;
+    color: var(--text-primary);
+    font-size: 1rem;
+    outline: none;
+}
+
+.form-group input::placeholder {
+    color: var(--text-muted);
+}
+
+.form-group button {
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+}
+
+.form-group button .arrow {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+    transition: transform 0.3s;
+}
+
+.form-group button:hover .arrow {
+    transform: translateX(3px);
+}
+
+.form-message {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    min-height: 1.5rem;
+}
+
+.form-message.success {
+    color: var(--planet-green);
+}
+
+.form-message.error {
+    color: var(--planet-red);
+}
+
+/* Social Links */
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.social-link {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: var(--transition-smooth);
+}
+
+.social-link svg {
+    width: 24px;
+    height: 24px;
+    fill: var(--text-secondary);
+    transition: fill 0.3s;
+}
+
+.social-link:hover {
+    background: rgba(0, 212, 255, 0.1);
+    border-color: var(--accent-cyan);
+    transform: translateY(-3px);
+}
+
+.social-link:hover svg {
+    fill: var(--accent-cyan);
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.footer {
+    margin-top: 4rem;
+    padding: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+}
+
+.footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.footer-text {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.footer-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.footer-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: var(--accent-cyan);
+}
+
+.footer-decoration {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple), var(--planet-orange), var(--accent-cyan));
+    background-size: 300% 100%;
+    animation: gradientFlow 5s linear infinite;
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes gradientFlow {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+}
+
+@keyframes planetRotate {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes ringRotate {
+    from { transform: translate(-50%, -50%) rotateX(75deg) rotateZ(0deg); }
+    to { transform: translate(-50%, -50%) rotateX(75deg) rotateZ(360deg); }
+}
+
+@keyframes orbit1 {
+    from { transform: rotate(0deg) translateX(110px) rotate(0deg); }
+    to { transform: rotate(360deg) translateX(110px) rotate(-360deg); }
+}
+
+@keyframes orbit2 {
+    from { transform: rotate(180deg) translateX(140px) rotate(-180deg); }
+    to { transform: rotate(540deg) translateX(140px) rotate(-540deg); }
+}
+
+@keyframes sunPulse {
+    0%, 100% { box-shadow: 0 0 60px rgba(255, 215, 0, 0.6), 0 0 120px rgba(255, 140, 0, 0.4), 0 0 180px rgba(255, 69, 0, 0.2); }
+    50% { box-shadow: 0 0 80px rgba(255, 215, 0, 0.8), 0 0 160px rgba(255, 140, 0, 0.6), 0 0 240px rgba(255, 69, 0, 0.3); }
+}
+
+@keyframes orbitRotate {
+    from { transform: rotate(0deg) translateX(var(--orbit-radius, 100px)) rotate(0deg); }
+    to { transform: rotate(360deg) translateX(var(--orbit-radius, 100px)) rotate(-360deg); }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-10px); }
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+@media (max-width: 1024px) {
+    .hero-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 3rem;
+    }
+    
+    .hero-buttons {
+        justify-content: center;
+    }
+    
+    .hero-tagline {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .planet-container {
+        width: 250px;
+        height: 250px;
+    }
+    
+    .planet-main {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .ring-1 { width: 180px; height: 180px; }
+    .ring-2 { width: 230px; height: 230px; }
+}
+
+@media (max-width: 768px) {
+    .nav-menu {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background: rgba(5, 5, 8, 0.98);
+        flex-direction: column;
+        align-items: center;
+        padding: 2rem;
+        gap: 1.5rem;
+        transform: translateY(-150%);
+        transition: transform 0.3s ease;
+    }
+    
+    .nav-menu.active {
+        transform: translateY(0);
+    }
+    
+    .hamburger {
+        display: flex;
+    }
+    
+    section {
+        padding: 4rem 1.5rem;
+    }
+    
+    .solar-container {
+        transform: scale(0.6);
+    }
+    
+    .facts-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .footer-links {
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .btn {
+        padding: 0.875rem 1.5rem;
+        font-size: 0.875rem;
+    }
+    
+    .fact-card {
+        padding: 1.5rem;
+    }
+    
+    .form-group {
+        flex-direction: column;
+        border-radius: 20px;
+    }
+    
+    .form-group button {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Scroll Animation Classes */
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Selection styling */
+::selection {
+    background: rgba(0, 212, 255, 0.3);
+    color: white;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--deep-space);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--accent-cyan), var(--accent-purple));
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--accent-purple), var(--accent-cyan));
+}
