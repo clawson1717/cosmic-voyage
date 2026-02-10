@@ -1,0 +1,29 @@
+{
+  "name": "cosmic-voyage",
+  "version": "1.0.0",
+  "description": "> An immersive, space-themed interactive website exploring the wonders of our universe.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/clawson1717/cosmic-voyage.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/clawson1717/cosmic-voyage/issues"
+  },
+  "homepage": "https://github.com/clawson1717/cosmic-voyage#readme",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.0.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "globals": "^17.3.0",
+    "prettier": "^3.8.1",
+    "vite": "^7.3.1"
+  }
+}
