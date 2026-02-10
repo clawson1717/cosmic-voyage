@@ -54,20 +54,13 @@ global.cancelAnimationFrame = vi.fn();
 // Mock window.scrollTo
 global.scrollTo = vi.fn();
 
-// Mock console methods for cleaner test output
-global.console = {
-  ...console,
-  log: vi.fn(),
-  warn: vi.fn(),
-  error: vi.fn(),
-};
+// Mock document.body.innerHTML setup
+document.body.innerHTML = '<div id="test-container"></div>';
 
 // Clean up after each test
-import { cleanup } from '@testing-library/dom';
 import { afterEach } from 'vitest';
 
 afterEach(() => {
-  cleanup();
   localStorage.clear();
   vi.clearAllMocks();
 });
