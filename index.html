@@ -169,6 +169,310 @@
         </div>
     </section>
 
+    <!-- Mission Control Dashboard Section -->
+    <section id="mission-control" class="mission-control">
+        <div class="section-header">
+            <h2 class="section-title">Mission Control</h2>
+            <p class="section-subtitle">Real-time telemetry and system monitoring</p>
+        </div>
+
+        <div class="mc-container">
+            <!-- Top Status Bar -->
+            <div class="mc-status-bar">
+                <div class="mc-status-item">
+                    <span class="mc-label">SYSTEM STATUS</span>
+                    <span class="mc-value status-online">ONLINE</span>
+                </div>
+                <div class="mc-status-item">
+                    <span class="mc-label">MISSION TIME</span>
+                    <span class="mc-value" id="mission-time">T+00:00:00</span>
+                </div>
+                <div class="mc-status-item">
+                    <span class="mc-label">UPTIME</span>
+                    <span class="mc-value" id="uptime">00:00:00</span>
+                </div>
+                <div class="mc-status-item">
+                    <span class="mc-label">SIGNAL</span>
+                    <div class="signal-bars">
+                        <div class="bar active"></div>
+                        <div class="bar active"></div>
+                        <div class="bar active"></div>
+                        <div class="bar active"></div>
+                        <div class="bar"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Dashboard Grid -->
+            <div class="mc-grid">
+                <!-- Launch Countdown Panel -->
+                <div class="mc-panel mc-panel-large countdown-panel">
+                    <div class="mc-panel-header">
+                        <span class="mc-panel-icon">🚀</span>
+                        <span class="mc-panel-title">LAUNCH COUNTDOWN</span>
+                        <div class="mc-panel-status warning">STANDBY</div>
+                    </div>
+                    <div class="countdown-display">
+                        <div class="countdown-unit">
+                            <span class="countdown-value" id="countdown-days">00</span>
+                            <span class="countdown-label">DAYS</span>
+                        </div>
+                        <div class="countdown-separator">:</div>
+                        <div class="countdown-unit">
+                            <span class="countdown-value" id="countdown-hours">00</span>
+                            <span class="countdown-label">HOURS</span>
+                        </div>
+                        <div class="countdown-separator">:</div>
+                        <div class="countdown-unit">
+                            <span class="countdown-value" id="countdown-minutes">00</span>
+                            <span class="countdown-label">MINUTES</span>
+                        </div>
+                        <div class="countdown-separator">:</div>
+                        <div class="countdown-unit">
+                            <span class="countdown-value" id="countdown-seconds">00</span>
+                            <span class="countdown-label">SECONDS</span>
+                        </div>
+                    </div>
+                    <div class="launch-info">
+                        <div class="launch-detail">
+                            <span class="launch-label">MISSION</span>
+                            <span class="launch-value">DEEP SPACE EXPLORER</span>
+                        </div>
+                        <div class="launch-detail">
+                            <span class="launch-label">LAUNCH PAD</span>
+                            <span class="launch-value">LC-39A</span>
+                        </div>
+                        <div class="launch-detail">
+                            <span class="launch-label">DESTINATION</span>
+                            <span class="launch-value">MARS ORBIT</span>
+                        </div>
+                    </div>
+                    <button class="mc-btn countdown-btn" id="launch-btn">INITIATE LAUNCH SEQUENCE</button>
+                </div>
+
+                <!-- Fuel Gauge Panel -->
+                <div class="mc-panel">
+                    <div class="mc-panel-header">
+                        <span class="mc-panel-icon">⛽</span>
+                        <span class="mc-panel-title">FUEL SYSTEMS</span>
+                    </div>
+                    <div class="gauge-container">
+                        <svg class="circular-gauge" viewBox="0 0 100 100">
+                            <circle class="gauge-bg" cx="50" cy="50" r="40"/>
+                            <circle class="gauge-fill fuel-gauge" cx="50" cy="50" r="40"/>
+                            <text class="gauge-text" x="50" y="50" id="fuel-percent">87%</text>
+                            <text class="gauge-label" x="50" y="65">FUEL</text>
+                        </svg>
+                    </div>
+                    <div class="bar-metrics">
+                        <div class="bar-metric">
+                            <span class="metric-label">LIQUID OXYGEN</span>
+                            <div class="metric-bar">
+                                <div class="metric-fill" style="width: 92%"></div>
+                            </div>
+                            <span class="metric-value">92%</span>
+                        </div>
+                        <div class="bar-metric">
+                            <span class="metric-label">LIQUID HYDROGEN</span>
+                            <div class="metric-bar">
+                                <div class="metric-fill" style="width: 87%"></div>
+                            </div>
+                            <span class="metric-value">87%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Power Systems Panel -->
+                <div class="mc-panel">
+                    <div class="mc-panel-header">
+                        <span class="mc-panel-icon">⚡</span>
+                        <span class="mc-panel-title">POWER SYSTEMS</span>
+                    </div>
+                    <div class="power-grid">
+                        <div class="power-cell">
+                            <div class="circular-indicator active" id="power-main"></div>
+                            <span class="power-label">MAIN</span>
+                            <span class="power-value" id="power-main-val">98%</span>
+                        </div>
+                        <div class="power-cell">
+                            <div class="circular-indicator active" id="power-aux"></div>
+                            <span class="power-label">AUXILIARY</span>
+                            <span class="power-value" id="power-aux-val">94%</span>
+                        </div>
+                        <div class="power-cell">
+                            <div class="circular-indicator standby" id="power-emergency"></div>
+                            <span class="power-label">EMERGENCY</span>
+                            <span class="power-value" id="power-emergency-val">100%</span>
+                        </div>
+                    </div>
+                    <div class="voltage-readout">
+                        <div class="voltage-item">
+                            <span class="voltage-label">VOLTAGE</span>
+                            <span class="voltage-value" id="voltage">120.4 V</span>
+                        </div>
+                        <div class="voltage-item">
+                            <span class="voltage-label">CURRENT</span>
+                            <span class="voltage-value" id="current">45.2 A</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Telemetry Panel -->
+                <div class="mc-panel mc-panel-wide">
+                    <div class="mc-panel-header">
+                        <span class="mc-panel-icon">📡</span>
+                        <span class="mc-panel-title">LIVE TELEMETRY</span>
+                        <div class="live-indicator">
+                            <span class="live-dot"></span>
+                            <span class="live-text">LIVE</span>
+                        </div>
+                    </div>
+                    <div class="telemetry-grid">
+                        <div class="telemetry-item">
+                            <span class="telemetry-label">ALTITUDE</span>
+                            <span class="telemetry-value" id="telemetry-altitude">0 km</span>
+                            <span class="telemetry-trend up">↗</span>
+                        </div>
+                        <div class="telemetry-item">
+                            <span class="telemetry-label">VELOCITY</span>
+                            <span class="telemetry-value" id="telemetry-velocity">0 km/h</span>
+                            <span class="telemetry-trend up">↗</span>
+                        </div>
+                        <div class="telemetry-item">
+                            <span class="telemetry-label">ACCELERATION</span>
+                            <span class="telemetry-value" id="telemetry-acceleration">0 m/s²</span>
+                            <span class="telemetry-trend">→</span>
+                        </div>
+                        <div class="telemetry-item">
+                            <span class="telemetry-label">TEMP EXT</span>
+                            <span class="telemetry-value" id="telemetry-temp-ext">-270°C</span>
+                            <span class="telemetry-trend down">↘</span>
+                        </div>
+                        <div class="telemetry-item">
+                            <span class="telemetry-label">TEMP INT</span>
+                            <span class="telemetry-value" id="telemetry-temp-int">21.5°C</span>
+                            <span class="telemetry-trend stable">→</span>
+                        </div>
+                        <div class="telemetry-item">
+                            <span class="telemetry-label">PRESSURE</span>
+                            <span class="telemetry-value" id="telemetry-pressure">101.3 kPa</span>
+                            <span class="telemetry-trend stable">→</span>
+                        </div>
+                        <div class="telemetry-item">
+                            <span class="telemetry-label">O₂ LEVEL</span>
+                            <span class="telemetry-value" id="telemetry-o2">21.0%</span>
+                            <span class="telemetry-trend stable">→</span>
+                        </div>
+                        <div class="telemetry-item">
+                            <span class="telemetry-label">RADIATION</span>
+                            <span class="telemetry-value" id="telemetry-radiation">0.12 mSv</span>
+                            <span class="telemetry-trend stable">→</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Status Panel -->
+                <div class="mc-panel">
+                    <div class="mc-panel-header">
+                        <span class="mc-panel-icon">🔧</span>
+                        <span class="mc-panel-title">SUBSYSTEMS</span>
+                    </div>
+                    <div class="subsystem-list">
+                        <div class="subsystem-item">
+                            <div class="subsystem-status online"></div>
+                            <span class="subsystem-name">NAVIGATION</span>
+                            <span class="subsystem-detail">GPS Locked</span>
+                        </div>
+                        <div class="subsystem-item">
+                            <div class="subsystem-status online"></div>
+                            <span class="subsystem-name">COMMUNICATION</span>
+                            <span class="subsystem-detail">5 Satellites</span>
+                        </div>
+                        <div class="subsystem-item">
+                            <div class="subsystem-status online"></div>
+                            <span class="subsystem-name">LIFE SUPPORT</span>
+                            <span class="subsystem-detail">Nominal</span>
+                        </div>
+                        <div class="subsystem-item">
+                            <div class="subsystem-status warning"></div>
+                            <span class="subsystem-name">THERMAL CTRL</span>
+                            <span class="subsystem-detail">Check Req'd</span>
+                        </div>
+                        <div class="subsystem-item">
+                            <div class="subsystem-status online"></div>
+                            <span class="subsystem-name">PROPULSION</span>
+                            <span class="subsystem-detail">Ready</span>
+                        </div>
+                        <div class="subsystem-item">
+                            <div class="subsystem-status offline"></div>
+                            <span class="subsystem-name">PAYLOAD BAY</span>
+                            <span class="subsystem-detail">Standby</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trajectory Panel -->
+                <div class="mc-panel mc-panel-wide">
+                    <div class="mc-panel-header">
+                        <span class="mc-panel-icon">🌍</span>
+                        <span class="mc-panel-title">ORBITAL TRAJECTORY</span>
+                    </div>
+                    <div class="trajectory-display">
+                        <canvas id="trajectory-canvas" width="400" height="150"></canvas>
+                        <div class="trajectory-info">
+                            <div class="traj-stat">
+                                <span class="traj-label">APOAPSIS</span>
+                                <span class="traj-value" id="apoapsis">200 km</span>
+                            </div>
+                            <div class="traj-stat">
+                                <span class="traj-label">PERIAPSIS</span>
+                                <span class="traj-value" id="periapsis">200 km</span>
+                            </div>
+                            <div class="traj-stat">
+                                <span class="traj-label">INCLINATION</span>
+                                <span class="traj-value" id="inclination">51.6°</span>
+                            </div>
+                            <div class="traj-stat">
+                                <span class="traj-label">ECCENTRICITY</span>
+                                <span class="traj-value" id="eccentricity">0.0001</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Console Log Panel -->
+                <div class="mc-panel mc-panel-full">
+                    <div class="mc-panel-header">
+                        <span class="mc-panel-icon">📋</span>
+                        <span class="mc-panel-title">MISSION LOG</span>
+                    </div>
+                    <div class="console-log" id="mission-log">
+                        <div class="log-entry info">
+                            <span class="log-time">[00:00:00]</span>
+                            <span class="log-type">[INFO]</span>
+                            <span class="log-message">Mission Control systems initialized</span>
+                        </div>
+                        <div class="log-entry success">
+                            <span class="log-time">[00:00:01]</span>
+                            <span class="log-type">[OK]</span>
+                            <span class="log-message">Telemetry link established</span>
+                        </div>
+                        <div class="log-entry info">
+                            <span class="log-time">[00:00:02]</span>
+                            <span class="log-type">[INFO]</span>
+                            <span class="log-message">All subsystems nominal</span>
+                        </div>
+                        <div class="log-entry warning">
+                            <span class="log-time">[00:00:05]</span>
+                            <span class="log-type">[WARN]</span>
+                            <span class="log-message">Thermal control system flagged for inspection</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Space Facts Section -->
     <section id="facts" class="facts">
         <div class="section-header">
@@ -268,5 +572,6 @@
     </section>
 
     <script src="js/space.js"></script>
+    <script type="module" src="js/animations.js"></script>
 </body>
 </html>
