@@ -1,0 +1,394 @@
+/**
+ * Solar System 3D - Interactive Visualization Styles
+ * Styles for the Three.js powered solar system
+ */
+
+/* Container */
+.solar-system-3d-container {
+    position: relative;
+    width: 100%;
+    height: 80vh;
+    min-height: 600px;
+    background: radial-gradient(ellipse at center, #0a0a1a 0%, #050508 100%);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 
+        0 0 60px rgba(0, 212, 255, 0.15),
+        inset 0 0 100px rgba(0, 0, 0, 0.5);
+}
+
+.solar-system-3d-container canvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Loading Spinner */
+.solar-loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(5, 5, 8, 0.95);
+    z-index: 100;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.solar-loader.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loader-spinner {
+    width: 60px;
+    height: 60px;
+    border: 3px solid rgba(0, 212, 255, 0.2);
+    border-top-color: #00d4ff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+}
+
+.solar-loader span {
+    color: #00d4ff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Info Panel */
+.planet-info-overlay {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 320px;
+    background: rgba(10, 10, 20, 0.95);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    border-radius: 16px;
+    padding: 1.5rem;
+    backdrop-filter: blur(20px);
+    transform: translateX(120%);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 50;
+    box-shadow: 
+        0 10px 40px rgba(0, 0, 0, 0.5),
+        0 0 30px rgba(0, 212, 255, 0.1);
+}
+
+.planet-info-overlay.active {
+    transform: translateX(0);
+}
+
+.info-panel-content {
+    position: relative;
+}
+
+.close-panel {
+    position: absolute;
+    top: -0.5rem;
+    right: -0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: #fff;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-panel:hover {
+    background: rgba(230, 57, 70, 0.8);
+    transform: rotate(90deg);
+}
+
+.planet-name {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #00d4ff;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+}
+
+.planet-description {
+    color: #adb5bd;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Stats Grid */
+.stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.stat-label {
+    font-size: 0.75rem;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.stat-value {
+    font-size: 0.95rem;
+    color: #f8f9fa;
+    font-weight: 600;
+}
+
+/* Controls */
+.solar-controls {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    display: flex;
+    gap: 0.75rem;
+    z-index: 50;
+}
+
+.control-btn {
+    width: 48px;
+    height: 48px;
+    background: rgba(10, 10, 20, 0.9);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.control-btn svg {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: #00d4ff;
+    stroke-width: 2;
+    transition: all 0.3s ease;
+}
+
+.control-btn:hover {
+    background: rgba(0, 212, 255, 0.2);
+    border-color: #00d4ff;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 20px rgba(0, 212, 255, 0.3);
+}
+
+.control-btn:hover svg {
+    stroke: #fff;
+}
+
+.control-btn:active {
+    transform: translateY(0);
+}
+
+/* Instructions Overlay */
+.solar-instructions {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(10, 10, 20, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    z-index: 40;
+    backdrop-filter: blur(10px);
+}
+
+.solar-instructions h4 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.85rem;
+    color: #00d4ff;
+    margin-bottom: 0.5rem;
+    letter-spacing: 1px;
+}
+
+.solar-instructions ul {
+    list-style: none;
+    font-size: 0.8rem;
+    color: #adb5bd;
+}
+
+.solar-instructions li {
+    margin-bottom: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.solar-instructions li::before {
+    content: '•';
+    color: #00d4ff;
+}
+
+/* Planet Labels (if enabled) */
+.planet-label-3d {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    pointer-events: none;
+    transform: translate(-50%, -100%);
+    margin-top: -10px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.planet-label-3d.visible {
+    opacity: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .solar-system-3d-container {
+        height: 70vh;
+        min-height: 500px;
+    }
+
+    .planet-info-overlay {
+        width: 280px;
+        right: 10px;
+        top: 10px;
+    }
+
+    .planet-name {
+        font-size: 1.25rem;
+    }
+
+    .stat-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .solar-system-3d-container {
+        height: 60vh;
+        min-height: 400px;
+        border-radius: 12px;
+    }
+
+    .planet-info-overlay {
+        position: fixed;
+        top: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        border-radius: 20px 20px 0 0;
+        transform: translateY(120%);
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+
+    .planet-info-overlay.active {
+        transform: translateY(0);
+    }
+
+    .solar-controls {
+        bottom: 10px;
+        left: 10px;
+    }
+
+    .control-btn {
+        width: 44px;
+        height: 44px;
+    }
+
+    .solar-instructions {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .solar-system-3d-container {
+        height: 50vh;
+        min-height: 350px;
+    }
+
+    .control-btn {
+        width: 40px;
+        height: 40px;
+    }
+
+    .control-btn svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+/* Animations */
+@keyframes pulse-glow {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 40px rgba(0, 212, 255, 0.5);
+    }
+}
+
+/* Fullscreen Mode */
+.solar-system-3d-container.fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    height: 100vh;
+    border-radius: 0;
+}
+
+.fullscreen-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background: rgba(10, 10, 20, 0.9);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 50;
+}
+
+.fullscreen-toggle:hover {
+    background: rgba(0, 212, 255, 0.2);
+    border-color: #00d4ff;
+}
+
+.fullscreen-toggle svg {
+    width: 20px;
+    height: 20px;
+    fill: #00d4ff;
+}

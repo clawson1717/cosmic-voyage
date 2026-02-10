@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmic Voyage | Explore the Universe</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+  <script type="module" crossorigin src="/cosmic-voyage/assets/main-DlVymUHO.js"></script>
+  <link rel="stylesheet" crossorigin href="/cosmic-voyage/assets/style-BFchNoR3.css">
+</head>
+<body>
+    <!-- Starfield Canvas Background -->
+    <canvas id="starfield"></canvas>
+    
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <span class="logo-icon">🚀</span>
+                <span class="logo-text">Cosmic Voyage</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="#hero" class="nav-link">Home</a></li>
+                <li><a href="#solar-system" class="nav-link">Solar System</a></li>
+                <li><a href="solar-system-3d.html" class="nav-link nav-link-featured">3D Explorer 🚀</a></li>
+                <li><a href="#mission-control" class="nav-link">Mission Control</a></li>
+                <li><a href="#apod" class="nav-link">NASA APOD</a></li>
+                <li><a href="#mars" class="nav-link">Mars Rover</a></li>
+                <li><a href="#facts" class="nav-link">Space Facts</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    <span class="title-line">Explore the</span>
+                    <span class="title-line cosmic">Cosmos</span>
+                </h1>
+                <p class="hero-tagline">Journey beyond the stars and discover the wonders of our universe</p>
+                <div class="hero-buttons">
+                    <a href="#solar-system" class="btn btn-primary">Start Exploring</a>
+                    <a href="#facts" class="btn btn-secondary">Learn More</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="planet-container">
+                    <div class="planet planet-main"></div>
+                    <div class="ring ring-1"></div>
+                    <div class="ring ring-2"></div>
+                    <div class="moon moon-1"></div>
+                    <div class="moon moon-2"></div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
+            <span>Scroll to explore</span>
+        </div>
+    </section>
+
+    <!-- Solar System Explorer Section -->
+    <section id="solar-system" class="solar-system">
+        <div class="section-header">
+            <h2 class="section-title">Solar System Explorer</h2>
+            <p class="section-subtitle">Click on any planet to learn more about our cosmic neighbors</p>
+        </div>
+        
+        <div class="solar-container">
+            <div class="sun">
+                <div class="sun-glow"></div>
+                <span class="sun-label">Sun</span>
+            </div>
+            
+            <div class="orbit orbit-mercury">
+                <div class="planet-body mercury" data-planet="mercury">
+                    <div class="planet-tooltip">
+                        <h3>Mercury</h3>
+                        <p>Smallest planet, closest to the Sun</p>
+                        <span class="temp">167°C avg</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="orbit orbit-venus">
+                <div class="planet-body venus" data-planet="venus">
+                    <div class="planet-tooltip">
+                        <h3>Venus</h3>
+                        <p>Hottest planet with thick atmosphere</p>
+                        <span class="temp">464°C</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="orbit orbit-earth">
+                <div class="planet-body earth" data-planet="earth">
+                    <div class="planet-tooltip">
+                        <h3>Earth</h3>
+                        <p>Our home, the only known planet with life</p>
+                        <span class="temp">15°C avg</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="orbit orbit-mars">
+                <div class="planet-body mars" data-planet="mars">
+                    <div class="planet-tooltip">
+                        <h3>Mars</h3>
+                        <p>The Red Planet, future of humanity</p>
+                        <span class="temp">-65°C avg</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="orbit orbit-jupiter">
+                <div class="planet-body jupiter" data-planet="jupiter">
+                    <div class="planet-tooltip">
+                        <h3>Jupiter</h3>
+                        <p>Largest planet, gas giant with Great Red Spot</p>
+                        <span class="temp">-110°C</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="orbit orbit-saturn">
+                <div class="planet-body saturn" data-planet="saturn">
+                    <div class="saturn-rings"></div>
+                    <div class="planet-tooltip">
+                        <h3>Saturn</h3>
+                        <p>Ringed beauty, less dense than water</p>
+                        <span class="temp">-140°C</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="orbit orbit-uranus">
+                <div class="planet-body uranus" data-planet="uranus">
+                    <div class="planet-tooltip">
+                        <h3>Uranus</h3>
+                        <p>Ice giant that rotates on its side</p>
+                        <span class="temp">-195°C</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="orbit orbit-neptune">
+                <div class="planet-body neptune" data-planet="neptune">
+                    <div class="planet-tooltip">
+                        <h3>Neptune</h3>
+                        <p>Windiest planet, deep blue ice giant</p>
+                        <span class="temp">-200°C</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="planet-info-panel" id="planet-info">
+            <div class="info-content">
+                <button class="close-info">&times;</button>
+                <h3 id="info-name">Select a Planet</h3>
+                <div class="info-stats" id="info-stats">
+                    <p>Click on any planet in the solar system above to view detailed information.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Control Dashboard Section -->
+    <section id="mission-control" class="mission-control">
+        <div class="section-header">
+            <h2 class="section-title">Mission Control</h2>
+            <p class="section-subtitle">Real-time telemetry and system monitoring</p>
+        </div>
+
+        <div class="mc-container">
+            <!-- Top Status Bar -->
+            <div class="mc-status-bar">
+                <div class="mc-status-item">
+                    <span class="mc-label">SYSTEM STATUS</span>
+                    <span class="mc-value status-online">ONLINE</span>
+                </div>
+                <div class="mc-status-item">
+                    <span class="mc-label">MISSION TIME</span>
+                    <span class="mc-value" id="mission-time">T+00:00:00</span>
+                </div>
+                <div class="mc-status-item">
+                    <span class="mc-label">UPTIME</span>
+                    <span class="mc-value" id="uptime">00:00:00</span>
+                </div>
+                <div class="mc-status-item">
+                    <span class="mc-label">SIGNAL</span>
+                    <div class="signal-bars">
+                        <div class="bar active"></div>
+                        <div class="bar active"></div>
+                        <div class="bar active"></div>
+                        <div class="bar active"></div>
+                        <div class="bar"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Dashboard Grid -->
+            <div class="mc-grid">
+                <!-- Launch Countdown Panel -->
+                <div class="mc-panel mc-panel-large countdown-panel">
+                    <div class="mc-panel-header">
+                        <span class="mc-panel-icon">🚀</span>
+                        <span class="mc-panel-title">LAUNCH COUNTDOWN</span>
+                        <div class="mc-panel-status warning">STANDBY</div>
+                    </div>
+                    <div class="countdown-display">
+                        <div class="countdown-unit">
+                            <span class="countdown-value" id="countdown-days">00</span>
+                            <span class="countdown-label">DAYS</span>
+                        </div>
+                        <div class="countdown-separator">:</div>
+                        <div class="countdown-unit">
+                            <span class="countdown-value" id="countdown-hours">00</span>
+                            <span class="countdown-label">HOURS</span>
+                        </div>
+                        <div class="countdown-separator">:</div>
+                        <div class="countdown-unit">
+                            <span class="countdown-value" id="countdown-minutes">00</span>
+                            <span class="countdown-label">MINUTES</span>
+                        </div>
+                        <div class="countdown-separator">:</div>
+                        <div class="countdown-unit">
+                            <span class="countdown-value" id="countdown-seconds">00</span>
+                            <span class="countdown-label">SECONDS</span>
+                        </div>
+                    </div>
+                    <div class="launch-info">
+                        <div class="launch-detail">
+                            <span class="launch-label">MISSION</span>
+                            <span class="launch-value">DEEP SPACE EXPLORER</span>
+                        </div>
+                        <div class="launch-detail">
+                            <span class="launch-label">LAUNCH PAD</span>
+                            <span class="launch-value">LC-39A</span>
+                        </div>
+                        <div class="launch-detail">
+                            <span class="launch-label">DESTINATION</span>
+                            <span class="launch-value">MARS ORBIT</span>
+                        </div>
+                    </div>
+                    <button class="mc-btn countdown-btn" id="launch-btn">INITIATE LAUNCH SEQUENCE</button>
+                </div>
+
+                <!-- Fuel Gauge Panel -->
+                <div class="mc-panel">
+                    <div class="mc-panel-header">
+                        <span class="mc-panel-icon">⛽</span>
+                        <span class="mc-panel-title">FUEL SYSTEMS</span>
+                    </div>
+                    <div class="gauge-container">
+                        <svg class="circular-gauge" viewBox="0 0 100 100">
+                            <circle class="gauge-bg" cx="50" cy="50" r="40"/>
+                            <circle class="gauge-fill fuel-gauge" cx="50" cy="50" r="40"/>
+                            <text class="gauge-text" x="50" y="50" id="fuel-percent">87%</text>
+                            <text class="gauge-label" x="50" y="65">FUEL</text>
+                        </svg>
+                    </div>
+                    <div class="bar-metrics">
+                        <div class="bar-metric">
+                            <span class="metric-label">LIQUID OXYGEN</span>
+                            <div class="metric-bar">
+                                <div class="metric-fill" style="width: 92%"></div>
+                            </div>
+                            <span class="metric-value">92%</span>
+                        </div>
+                        <div class="bar-metric">
+                            <span class="metric-label">LIQUID HYDROGEN</span>
+                            <div class="metric-bar">
+                                <div class="metric-fill" style="width: 87%"></div>
+                            </div>
+                            <span class="metric-value">87%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Power Systems Panel -->
+                <div class="mc-panel">
+                    <div class="mc-panel-header">
+                        <span class="mc-panel-icon">⚡</span>
+                        <span class="mc-panel-title">POWER SYSTEMS</span>
+                    </div>
+                    <div class="power-grid">
+                        <div class="power-cell">
+                            <div class="circular-indicator active" id="power-main"></div>
+                            <span class="power-label">MAIN</span>
+                            <span class="power-value" id="power-main-val">98%</span>
+                        </div>
+                        <div class="power-cell">
+                            <div class="circular-indicator active" id="power-aux"></div>
+                            <span class="power-label">AUXILIARY</span>
+                            <span class="power-value" id="power-aux-val">94%</span>
+                        </div>
+                        <div class="power-cell">
+                            <div class="circular-indicator standby" id="power-emergency"></div>
+                            <span class="power-label">EMERGENCY</span>
+                            <span class="power-value" id="power-emergency-val">100%</span>
+                        </div>
+                    </div>
+                    <div class="voltage-readout">
+                        <div class="voltage-item">
+                            <span class="voltage-label">VOLTAGE</span>
+                            <span class="voltage-value" id="voltage">120.4 V</span>
+                        </div>
+                        <div class="voltage-item">
+                            <span class="voltage-label">CURRENT</span>
+                            <span class="voltage-value" id="current">45.2 A</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Telemetry Panel -->
+                <div class="mc-panel mc-panel-wide">
+                    <div class="mc-panel-header">
+                        <span class="mc-panel-icon">📡</span>
+                        <span class="mc-panel-title">LIVE TELEMETRY</span>
+                        <div class="live-indicator">
+                            <span class="live-dot"></span>
+                            <span class="live-text">LIVE</span>
+                        </div>
+                    </div>
+                    <div class="telemetry-grid">
+                        <div class="telemetry-item">
+                            <span class="telemetry-label">ALTITUDE</span>
+                            <span class="telemetry-value" id="telemetry-altitude">0 km</span>
+                            <span class="telemetry-trend up">↗</span>
+                        </div>
+                        <div class="telemetry-item">
+                            <span class="telemetry-label">VELOCITY</span>
+                            <span class="telemetry-value" id="telemetry-velocity">0 km/h</span>
+                            <span class="telemetry-trend up">↗</span>
+                        </div>
+                        <div class="telemetry-item">
+                            <span class="telemetry-label">ACCELERATION</span>
+                            <span class="telemetry-value" id="telemetry-acceleration">0 m/s²</span>
+                            <span class="telemetry-trend">→</span>
+                        </div>
+                        <div class="telemetry-item">
+                            <span class="telemetry-label">TEMP EXT</span>
+                            <span class="telemetry-value" id="telemetry-temp-ext">-270°C</span>
+                            <span class="telemetry-trend down">↘</span>
+                        </div>
+                        <div class="telemetry-item">
+                            <span class="telemetry-label">TEMP INT</span>
+                            <span class="telemetry-value" id="telemetry-temp-int">21.5°C</span>
+                            <span class="telemetry-trend stable">→</span>
+                        </div>
+                        <div class="telemetry-item">
+                            <span class="telemetry-label">PRESSURE</span>
+                            <span class="telemetry-value" id="telemetry-pressure">101.3 kPa</span>
+                            <span class="telemetry-trend stable">→</span>
+                        </div>
+                        <div class="telemetry-item">
+                            <span class="telemetry-label">O₂ LEVEL</span>
+                            <span class="telemetry-value" id="telemetry-o2">21.0%</span>
+                            <span class="telemetry-trend stable">→</span>
+                        </div>
+                        <div class="telemetry-item">
+                            <span class="telemetry-label">RADIATION</span>
+                            <span class="telemetry-value" id="telemetry-radiation">0.12 mSv</span>
+                            <span class="telemetry-trend stable">→</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Status Panel -->
+                <div class="mc-panel">
+                    <div class="mc-panel-header">
+                        <span class="mc-panel-icon">🔧</span>
+                        <span class="mc-panel-title">SUBSYSTEMS</span>
+                    </div>
+                    <div class="subsystem-list">
+                        <div class="subsystem-item">
+                            <div class="subsystem-status online"></div>
+                            <span class="subsystem-name">NAVIGATION</span>
+                            <span class="subsystem-detail">GPS Locked</span>
+                        </div>
+                        <div class="subsystem-item">
+                            <div class="subsystem-status online"></div>
+                            <span class="subsystem-name">COMMUNICATION</span>
+                            <span class="subsystem-detail">5 Satellites</span>
+                        </div>
+                        <div class="subsystem-item">
+                            <div class="subsystem-status online"></div>
+                            <span class="subsystem-name">LIFE SUPPORT</span>
+                            <span class="subsystem-detail">Nominal</span>
+                        </div>
+                        <div class="subsystem-item">
+                            <div class="subsystem-status warning"></div>
+                            <span class="subsystem-name">THERMAL CTRL</span>
+                            <span class="subsystem-detail">Check Req'd</span>
+                        </div>
+                        <div class="subsystem-item">
+                            <div class="subsystem-status online"></div>
+                            <span class="subsystem-name">PROPULSION</span>
+                            <span class="subsystem-detail">Ready</span>
+                        </div>
+                        <div class="subsystem-item">
+                            <div class="subsystem-status offline"></div>
+                            <span class="subsystem-name">PAYLOAD BAY</span>
+                            <span class="subsystem-detail">Standby</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trajectory Panel -->
+                <div class="mc-panel mc-panel-wide">
+                    <div class="mc-panel-header">
+                        <span class="mc-panel-icon">🌍</span>
+                        <span class="mc-panel-title">ORBITAL TRAJECTORY</span>
+                    </div>
+                    <div class="trajectory-display">
+                        <canvas id="trajectory-canvas" width="400" height="150"></canvas>
+                        <div class="trajectory-info">
+                            <div class="traj-stat">
+                                <span class="traj-label">APOAPSIS</span>
+                                <span class="traj-value" id="apoapsis">200 km</span>
+                            </div>
+                            <div class="traj-stat">
+                                <span class="traj-label">PERIAPSIS</span>
+                                <span class="traj-value" id="periapsis">200 km</span>
+                            </div>
+                            <div class="traj-stat">
+                                <span class="traj-label">INCLINATION</span>
+                                <span class="traj-value" id="inclination">51.6°</span>
+                            </div>
+                            <div class="traj-stat">
+                                <span class="traj-label">ECCENTRICITY</span>
+                                <span class="traj-value" id="eccentricity">0.0001</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Console Log Panel -->
+                <div class="mc-panel mc-panel-full">
+                    <div class="mc-panel-header">
+                        <span class="mc-panel-icon">📋</span>
+                        <span class="mc-panel-title">MISSION LOG</span>
+                    </div>
+                    <div class="console-log" id="mission-log">
+                        <div class="log-entry info">
+                            <span class="log-time">[00:00:00]</span>
+                            <span class="log-type">[INFO]</span>
+                            <span class="log-message">Mission Control systems initialized</span>
+                        </div>
+                        <div class="log-entry success">
+                            <span class="log-time">[00:00:01]</span>
+                            <span class="log-type">[OK]</span>
+                            <span class="log-message">Telemetry link established</span>
+                        </div>
+                        <div class="log-entry info">
+                            <span class="log-time">[00:00:02]</span>
+                            <span class="log-type">[INFO]</span>
+                            <span class="log-message">All subsystems nominal</span>
+                        </div>
+                        <div class="log-entry warning">
+                            <span class="log-time">[00:00:05]</span>
+                            <span class="log-type">[WARN]</span>
+                            <span class="log-message">Thermal control system flagged for inspection</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3D Solar System Explorer Promo Section -->
+    <section id="solar-system-3d-promo" class="solar-system-3d-promo">
+        <div class="promo-container">
+            <div class="promo-content">
+                <div class="promo-badge">✨ New Experience</div>
+                <h2 class="promo-title">Explore in 3D</h2>
+                <p class="promo-description">
+                    Take your cosmic journey to the next dimension. Our interactive 3D Solar System 
+                    lets you fly through space, zoom into planets, and discover the wonders of our 
+                    cosmic neighborhood like never before.
+                </p>
+                <ul class="promo-features">
+                    <li>🪐 Realistic 3D planet models with accurate proportions</li>
+                    <li>🌟 Dynamic orbital animations and glowing sun effects</li>
+                    <li>🖱️ Interactive controls - click, zoom, and rotate</li>
+                    <li>📊 Detailed planetary statistics and information</li>
+                    <li>🎮 Immersive full-screen experience</li>
+                </ul>
+                <a href="solar-system-3d.html" class="btn btn-primary btn-large">
+                    <span>Launch 3D Explorer</span>
+                    <svg class="arrow" viewBox="0 0 24 24">
+                        <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+                    </svg>
+                </a>
+            </div>
+            <div class="promo-visual">
+                <div class="orbit-preview">
+                    <div class="preview-sun"></div>
+                    <div class="preview-orbit orbit-1">
+                        <div class="preview-planet planet-1"></div>
+                    </div>
+                    <div class="preview-orbit orbit-2">
+                        <div class="preview-planet planet-2"></div>
+                    </div>
+                    <div class="preview-orbit orbit-3">
+                        <div class="preview-planet planet-3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NASA Live Feed Section -->
+    <section id="live-feed" class="live-feed-section">
+        <div id="nasa-live-container"></div>
+    </section>
+
+    <!-- NASA APOD Section -->
+    <section id="apod" class="apod-section">
+        <div class="section-header">
+            <h2 class="section-title">Astronomy Picture of the Day</h2>
+            <p class="section-subtitle">Daily cosmic imagery from NASA's archives</p>
+        </div>
+        <div id="apod-container" class="apod-component"></div>
+    </section>
+
+    <!-- NASA Mars Rover Section -->
+    <section id="mars" class="mars-section">
+        <div class="section-header">
+            <h2 class="section-title">Live from Mars</h2>
+            <p class="section-subtitle">Latest images from the Mars Rover missions</p>
+        </div>
+        <div id="mars-container" class="mars-component"></div>
+    </section>
+
+    <!-- NASA Gallery Section -->
+    <section id="gallery" class="gallery-section">
+        <div class="section-header">
+            <h2 class="section-title">Recent Discoveries</h2>
+            <p class="section-subtitle">A gallery of recent cosmic imagery</p>
+        </div>
+        <div id="gallery-container" class="gallery-component"></div>
+    </section>
+
+    <!-- Space Facts Section -->
+    <section id="facts" class="facts">
+        <div class="section-header">
+            <h2 class="section-title">Mind-Blowing Space Facts</h2>
+            <p class="section-subtitle">Discover the incredible truths about our universe</p>
+        </div>
+        
+        <div class="facts-grid">
+            <div class="fact-card" data-aos="fade-up">
+                <div class="fact-icon">☀️</div>
+                <h3 class="fact-title">1 Million Earths</h3>
+                <p class="fact-text">You could fit one million Earths inside the Sun. The Sun accounts for 99.86% of all mass in our solar system.</p>
+                <div class="fact-glow"></div>
+            </div>
+            
+            <div class="fact-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="fact-icon">🌌</div>
+                <h3 class="fact-title">Infinite Stars</h3>
+                <p class="fact-text">There are more stars in the universe than grains of sand on all of Earth's beaches combined.</p>
+                <div class="fact-glow"></div>
+            </div>
+            
+            <div class="fact-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="fact-icon">🕳️</div>
+                <h3 class="fact-title">Black Hole Giants</h3>
+                <p class="fact-text">The largest known black hole, TON 618, has a mass of 66 billion suns and is 40 billion km across.</p>
+                <div class="fact-glow"></div>
+            </div>
+            
+            <div class="fact-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="fact-icon">🌙</div>
+                <h3 class="fact-title">Moon Drift</h3>
+                <p class="fact-text">The Moon is drifting away from Earth at a rate of 3.8 cm per year—about the same speed your fingernails grow.</p>
+                <div class="fact-glow"></div>
+            </div>
+            
+            <div class="fact-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="fact-icon">⚡</div>
+                <h3 class="fact-title">Neutron Stars</h3>
+                <p class="fact-text">A sugar-cube-sized amount of neutron star material would weigh about 1 billion tons on Earth.</p>
+                <div class="fact-glow"></div>
+            </div>
+            
+            <div class="fact-card" data-aos="fade-up" data-aos-delay="500">
+                <div class="fact-icon">👁️</div>
+                <h3 class="fact-title">Cosmic Light</h3>
+                <p class="fact-text">The light we see from stars today left those stars thousands or even millions of years ago.</p>
+                <div class="fact-glow"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact/Footer Section -->
+    <section id="contact" class="contact">
+        <div class="contact-content">
+            <div class="contact-info">
+                <h2 class="section-title">Join the Mission</h2>
+                <p class="contact-text">Stay updated with the latest discoveries and cosmic events. Subscribe to our newsletter for weekly space updates.</p>
+                
+                <form class="contact-form" id="subscribe-form">
+                    <div class="form-group">
+                        <input type="email" id="email" placeholder="Enter your email address" required>
+                        <button type="submit" class="btn btn-primary">
+                            <span>Subscribe</span>
+                            <svg class="arrow" viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+                        </button>
+                    </div>
+                    <p class="form-message" id="form-message"></p>
+                </form>
+                
+                <div class="social-links">
+                    <a href="#" class="social-link" aria-label="Twitter">
+                        <svg viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
+                    </a>
+                    <a href="#" class="social-link" aria-label="GitHub">
+                        <svg viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Discord">
+                        <svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028 14.09 14.09 0 001.226-1.994.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <footer class="footer">
+            <div class="footer-content">
+                <p class="footer-text">&copy; 2026 Cosmic Voyage. Built with 💫 and stardust.</p>
+                <div class="footer-links">
+                    <a href="#hero">Home</a>
+                    <a href="#solar-system">Solar System</a>
+                    <a href="#facts">Facts</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </div>
+            <div class="footer-decoration"></div>
+        </footer>
+    </section>
+
+</body>
+</html>
