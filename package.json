@@ -16,7 +16,13 @@
     "type": "git",
     "url": "git+https://github.com/clawson1717/cosmic-voyage.git"
   },
-  "keywords": ["space", "cosmic", "interactive", "universe", "solar-system"],
+  "keywords": [
+    "space",
+    "cosmic",
+    "interactive",
+    "universe",
+    "solar-system"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
@@ -27,5 +33,9 @@
     "globals": "^15.14.0",
     "prettier": "^3.5.0",
     "vite": "^6.1.0"
+  },
+  "dependencies": {
+    "@gsap/react": "^2.1.2",
+    "gsap": "^3.14.2"
   }
 }
