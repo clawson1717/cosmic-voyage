@@ -3,6 +3,17 @@
  * Initializes all modules
  */
 
+// Import all CSS
+import '../css/_variables.css';
+import '../css/_base.css';
+import '../css/_typography.css';
+import '../css/_layout.css';
+import '../css/_components.css';
+import '../css/_animations.css';
+import '../css/_responsive.css';
+import '../css/main.css';
+import '../css/styles.css';
+
 import { Starfield } from './modules/Starfield.js';
 
 /**

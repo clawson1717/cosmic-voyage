@@ -3,12 +3,13 @@ import { resolve } from 'path';
 
 export default defineConfig({
   root: '.',
-  base: '/',
+  base: '/cosmic-voyage/',
   publicDir: 'public',
   build: {
     outDir: 'dist',
     emptyOutDir: true,
     sourcemap: true,
+    cssCodeSplit: false,
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
