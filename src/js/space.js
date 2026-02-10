@@ -531,6 +531,57 @@ class SmoothScroll {
 }
 
 // ============================================
+// NASA DATA COMPONENTS INITIALIZATION
+// ============================================
+class NASAComponents {
+    constructor() {
+        this.init();
+    }
+    
+    async init() {
+        // Initialize APOD Component
+        const apodContainer = document.getElementById('apod-container');
+        if (apodContainer && typeof APODComponent !== 'undefined') {
+            const apod = new APODComponent('apod-container', {
+                showExplanation: true,
+                maxExplanationLength: 400
+            });
+            await apod.render();
+            console.log('🌌 NASA APOD loaded');
+        }
+        
+        // Initialize Mars Rover Component
+        const marsContainer = document.getElementById('mars-container');
+        if (marsContainer && typeof MarsRoverComponent !== 'undefined') {
+            const mars = new MarsRoverComponent('mars-container', {
+                rover: 'curiosity',
+                maxPhotos: 6
+            });
+            await mars.render();
+            console.log('🔴 Mars Rover photos loaded');
+        }
+        
+        // Initialize Gallery Component
+        const galleryContainer = document.getElementById('gallery-container');
+        if (galleryContainer && typeof NASAGalleryComponent !== 'undefined') {
+            const gallery = new NASAGalleryComponent('gallery-container', {
+                count: 8
+            });
+            await gallery.render();
+            console.log('📸 NASA Gallery loaded');
+        }
+        
+        // Initialize Live Feed Component
+        const liveContainer = document.getElementById('nasa-live-container');
+        if (liveContainer && typeof NASALiveFeed !== 'undefined') {
+            const liveFeed = new NASALiveFeed('nasa-live-container');
+            await liveFeed.render();
+            console.log('🛰️ Live space data loaded');
+        }
+    }
+}
+
+// ============================================
 // COSMIC VOYAGE APP
 // ============================================
 class CosmicVoyage {
@@ -549,7 +600,11 @@ class CosmicVoyage {
         new NewsletterForm();
         new SmoothScroll();
         
+        // Initialize NASA API Components
+        new NASAComponents();
+        
         console.log('🚀 Cosmic Voyage initialized! Welcome to space exploration.');
+        console.log('🌌 NASA API integration active - Real space data incoming!');
     }
 }
 

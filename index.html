@@ -473,6 +473,38 @@
         </div>
     </section>
 
+    <!-- NASA Live Feed Section -->
+    <section id="live-feed" class="live-feed-section">
+        <div id="nasa-live-container"></div>
+    </section>
+
+    <!-- NASA APOD Section -->
+    <section id="apod" class="apod-section">
+        <div class="section-header">
+            <h2 class="section-title">Astronomy Picture of the Day</h2>
+            <p class="section-subtitle">Daily cosmic imagery from NASA's archives</p>
+        </div>
+        <div id="apod-container" class="apod-component"></div>
+    </section>
+
+    <!-- NASA Mars Rover Section -->
+    <section id="mars" class="mars-section">
+        <div class="section-header">
+            <h2 class="section-title">Live from Mars</h2>
+            <p class="section-subtitle">Latest images from the Mars Rover missions</p>
+        </div>
+        <div id="mars-container" class="mars-component"></div>
+    </section>
+
+    <!-- NASA Gallery Section -->
+    <section id="gallery" class="gallery-section">
+        <div class="section-header">
+            <h2 class="section-title">Recent Discoveries</h2>
+            <p class="section-subtitle">A gallery of recent cosmic imagery</p>
+        </div>
+        <div id="gallery-container" class="gallery-component"></div>
+    </section>
+
     <!-- Space Facts Section -->
     <section id="facts" class="facts">
         <div class="section-header">
@@ -571,7 +603,10 @@
         </footer>
     </section>
 
+    <script src="src/js/nasa-api.js"></script>
+    <script src="src/js/nasa-components.js"></script>
     <script src="src/js/space.js"></script>
     <script type="module" src="src/js/animations.js"></script>
+    <script nomodule src="src/js/animations-fallback.js"></script>
 </body>
 </html>

@@ -733,6 +733,9 @@ if (document.readyState === 'loading') {
     initAnimations();
 }
 
+// Mark GSAP as loaded to prevent fallback
+window.gsapLoaded = true;
+
 // Export for potential module use
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = {
