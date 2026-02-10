@@ -936,6 +936,130 @@ section {
 }
 
 /* ============================================
+   ENHANCED SCROLL ANIMATIONS & TRANSITIONS
+   ============================================ */
+
+/* Smooth scroll behavior */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Navigation active state */
+.nav-link.active {
+    color: var(--accent-cyan);
+}
+
+.nav-link.active::after {
+    width: 100%;
+}
+
+/* Parallax layers */
+.parallax-layer {
+    will-change: transform;
+    backface-visibility: hidden;
+}
+
+/* Scroll Progress Bar */
+#scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple), var(--planet-orange));
+    z-index: 10001;
+    width: 0%;
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+}
+
+/* Enhanced Hero Text Animation */
+.hero-title span {
+    display: inline-block;
+    will-change: transform, opacity;
+}
+
+/* Fact Card 3D Transform Setup */
+.fact-card {
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    will-change: transform, box-shadow;
+}
+
+/* Magnetic hover effect base */
+.btn, .nav-link, .social-link, .planet-body {
+    transition: transform 0.2s ease-out;
+    will-change: transform;
+}
+
+/* Page transition overlay */
+#page-transition-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--deep-space) 0%, var(--nebula-purple) 50%, var(--nebula-blue) 100%);
+    z-index: 10000;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Orbit Animation Enhancements */
+.orbit {
+    will-change: transform;
+}
+
+.planet-body {
+    will-change: transform, scale;
+}
+
+/* Section reveal base styles */
+.section-header,
+.fact-card,
+.contact-form,
+.social-link {
+    will-change: transform, opacity;
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    .parallax-layer {
+        display: none !important;
+    }
+    
+    #scroll-progress {
+        display: none !important;
+    }
+    
+    .planet-body {
+        animation: none !important;
+    }
+}
+
+/* Touch Device Optimizations */
+@media (pointer: coarse) {
+    .parallax-layer {
+        display: none !important;
+    }
+    
+    .magnetic-effect {
+        transform: none !important;
+    }
+}
+
+/* ============================================
    ANIMATIONS
    ============================================ */
 @keyframes float {
