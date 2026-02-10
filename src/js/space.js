@@ -531,6 +531,368 @@ class SmoothScroll {
 }
 
 // ============================================
+// MISSION CONTROL DASHBOARD
+// ============================================
+class MissionControl {
+    constructor() {
+        this.missionStartTime = Date.now();
+        this.launchTime = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days from now
+        this.isLaunched = false;
+        this.telemetry = {
+            altitude: 0,
+            velocity: 0,
+            acceleration: 0,
+            tempExt: -270,
+            tempInt: 21.5,
+            pressure: 101.3,
+            o2Level: 21.0,
+            radiation: 0.12
+        };
+        this.logEntries = [];
+        this.init();
+    }
+
+    init() {
+        this.bindElements();
+        this.startClocks();
+        this.startTelemetry();
+        this.drawTrajectory();
+        this.addEventListeners();
+        this.addLogEntry('info', 'Mission Control dashboard initialized');
+        console.log('🎯 Mission Control systems online');
+    }
+
+    bindElements() {
+        this.elements = {
+            missionTime: document.getElementById('mission-time'),
+            uptime: document.getElementById('uptime'),
+            countdownDays: document.getElementById('countdown-days'),
+            countdownHours: document.getElementById('countdown-hours'),
+            countdownMinutes: document.getElementById('countdown-minutes'),
+            countdownSeconds: document.getElementById('countdown-seconds'),
+            launchBtn: document.getElementById('launch-btn'),
+            fuelGauge: document.querySelector('.fuel-gauge'),
+            fuelPercent: document.getElementById('fuel-percent'),
+            powerMain: document.getElementById('power-main'),
+            powerAux: document.getElementById('power-aux'),
+            powerEmergency: document.getElementById('power-emergency'),
+            powerMainVal: document.getElementById('power-main-val'),
+            powerAuxVal: document.getElementById('power-aux-val'),
+            powerEmergencyVal: document.getElementById('power-emergency-val'),
+            voltage: document.getElementById('voltage'),
+            current: document.getElementById('current'),
+            altitude: document.getElementById('telemetry-altitude'),
+            velocity: document.getElementById('telemetry-velocity'),
+            acceleration: document.getElementById('telemetry-acceleration'),
+            tempExt: document.getElementById('telemetry-temp-ext'),
+            tempInt: document.getElementById('telemetry-temp-int'),
+            pressure: document.getElementById('telemetry-pressure'),
+            o2Level: document.getElementById('telemetry-o2'),
+            radiation: document.getElementById('telemetry-radiation'),
+            apoapsis: document.getElementById('apoapsis'),
+            periapsis: document.getElementById('periapsis'),
+            inclination: document.getElementById('inclination'),
+            eccentricity: document.getElementById('eccentricity'),
+            missionLog: document.getElementById('mission-log')
+        };
+    }
+
+    startClocks() {
+        // Update every 100ms for smooth display
+        setInterval(() => this.updateClocks(), 100);
+    }
+
+    updateClocks() {
+        const now = Date.now();
+        const elapsed = now - this.missionStartTime;
+        
+        // Mission time (T+ format)
+        const missionSeconds = Math.floor(elapsed / 1000);
+        const missionHours = Math.floor(missionSeconds / 3600);
+        const missionMinutes = Math.floor((missionSeconds % 3600) / 60);
+        const missionSecs = missionSeconds % 60;
+        
+        if (this.elements.missionTime) {
+            this.elements.missionTime.textContent = 
+                `T+${String(missionHours).padStart(2, '0')}:${String(missionMinutes).padStart(2, '0')}:${String(missionSecs).padStart(2, '0')}`;
+        }
+
+        // Uptime
+        if (this.elements.uptime) {
+            this.elements.uptime.textContent = 
+                `${String(missionHours).padStart(2, '0')}:${String(missionMinutes).padStart(2, '0')}:${String(missionSecs).padStart(2, '0')}`;
+        }
+
+        // Countdown
+        const timeUntilLaunch = this.launchTime - now;
+        
+        if (timeUntilLaunch > 0 && !this.isLaunched) {
+            const days = Math.floor(timeUntilLaunch / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeUntilLaunch % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeUntilLaunch % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeUntilLaunch % (1000 * 60)) / 1000);
+
+            if (this.elements.countdownDays) {
+                this.elements.countdownDays.textContent = String(days).padStart(2, '0');
+                this.elements.countdownHours.textContent = String(hours).padStart(2, '0');
+                this.elements.countdownMinutes.textContent = String(minutes).padStart(2, '0');
+                this.elements.countdownSeconds.textContent = String(seconds).padStart(2, '0');
+            }
+
+            // Critical countdown (less than 1 minute)
+            if (timeUntilLaunch < 60000 && timeUntilLaunch > 0) {
+                this.elements.countdownSeconds.classList.add('critical');
+            }
+        } else if (!this.isLaunched) {
+            // Launch time reached but not launched
+            if (this.elements.countdownDays) {
+                this.elements.countdownDays.textContent = '00';
+                this.elements.countdownHours.textContent = '00';
+                this.elements.countdownMinutes.textContent = '00';
+                this.elements.countdownSeconds.textContent = '00';
+            }
+        }
+    }
+
+    startTelemetry() {
+        // Update telemetry every 2 seconds
+        setInterval(() => this.updateTelemetry(), 2000);
+        
+        // Update power systems every 3 seconds
+        setInterval(() => this.updatePowerSystems(), 3000);
+        
+        // Update trajectory every 5 seconds
+        setInterval(() => this.updateTrajectory(), 5000);
+    }
+
+    updateTelemetry() {
+        if (this.isLaunched) {
+            // Simulate ascent data
+            this.telemetry.altitude += Math.random() * 50;
+            this.telemetry.velocity += Math.random() * 200;
+            this.telemetry.acceleration = 2.5 + Math.random() * 1.5;
+            this.telemetry.tempExt = -50 - Math.random() * 20;
+            this.telemetry.tempInt = 20 + Math.random() * 4;
+            this.telemetry.pressure = Math.max(0, this.telemetry.pressure - Math.random() * 5);
+            this.telemetry.o2Level = Math.max(19, 21 - Math.random() * 0.5);
+            this.telemetry.radiation = 0.12 + Math.random() * 0.1;
+        } else {
+            // Pre-launch fluctuations
+            this.telemetry.tempInt = 21 + (Math.random() - 0.5) * 0.5;
+            this.telemetry.pressure = 101.3 + (Math.random() - 0.5) * 0.2;
+            this.telemetry.o2Level = 21 + (Math.random() - 0.5) * 0.1;
+        }
+
+        // Update display
+        if (this.elements.altitude) {
+            this.elements.altitude.textContent = `${this.telemetry.altitude.toFixed(1)} km`;
+        }
+        if (this.elements.velocity) {
+            this.elements.velocity.textContent = `${this.telemetry.velocity.toFixed(0)} km/h`;
+        }
+        if (this.elements.acceleration) {
+            this.elements.acceleration.textContent = `${this.telemetry.acceleration.toFixed(1)} m/s²`;
+        }
+        if (this.elements.tempExt) {
+            this.elements.tempExt.textContent = `${this.telemetry.tempExt.toFixed(0)}°C`;
+        }
+        if (this.elements.tempInt) {
+            this.elements.tempInt.textContent = `${this.telemetry.tempInt.toFixed(1)}°C`;
+        }
+        if (this.elements.pressure) {
+            this.elements.pressure.textContent = `${this.telemetry.pressure.toFixed(1)} kPa`;
+        }
+        if (this.elements.o2Level) {
+            this.elements.o2Level.textContent = `${this.telemetry.o2Level.toFixed(1)}%`;
+        }
+        if (this.elements.radiation) {
+            this.elements.radiation.textContent = `${this.telemetry.radiation.toFixed(2)} mSv`;
+        }
+    }
+
+    updatePowerSystems() {
+        // Simulate power fluctuations
+        const mainPower = 95 + Math.random() * 5;
+        const auxPower = 90 + Math.random() * 8;
+        const emergencyPower = 99 + Math.random();
+
+        if (this.elements.powerMainVal) {
+            this.elements.powerMainVal.textContent = `${mainPower.toFixed(0)}%`;
+        }
+        if (this.elements.powerAuxVal) {
+            this.elements.powerAuxVal.textContent = `${auxPower.toFixed(0)}%`;
+        }
+        if (this.elements.powerEmergencyVal) {
+            this.elements.powerEmergencyVal.textContent = `${Math.min(100, emergencyPower).toFixed(0)}%`;
+        }
+
+        // Update voltage and current
+        const voltage = 118 + Math.random() * 4;
+        const current = 40 + Math.random() * 10;
+
+        if (this.elements.voltage) {
+            this.elements.voltage.textContent = `${voltage.toFixed(1)} V`;
+        }
+        if (this.elements.current) {
+            this.elements.current.textContent = `${current.toFixed(1)} A`;
+        }
+    }
+
+    updateTrajectory() {
+        if (this.isLaunched) {
+            const apo = 200 + this.telemetry.altitude * 0.1;
+            const peri = 200 + Math.random() * 10;
+            
+            if (this.elements.apoapsis) {
+                this.elements.apoapsis.textContent = `${apo.toFixed(0)} km`;
+            }
+            if (this.elements.periapsis) {
+                this.elements.periapsis.textContent = `${peri.toFixed(0)} km`;
+            }
+        }
+    }
+
+    drawTrajectory() {
+        const canvas = document.getElementById('trajectory-canvas');
+        if (!canvas) return;
+
+        const ctx = canvas.getContext('2d');
+        const width = canvas.width;
+        const height = canvas.height;
+
+        // Clear canvas
+        ctx.clearRect(0, 0, width, height);
+
+        // Draw Earth
+        ctx.beginPath();
+        ctx.arc(60, height / 2, 40, 0, Math.PI * 2);
+        ctx.fillStyle = '#1e3a5f';
+        ctx.fill();
+        ctx.strokeStyle = '#4a90d9';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // Draw orbit path
+        ctx.beginPath();
+        ctx.ellipse(200, height / 2, 120, 60, 0, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(0, 212, 255, 0.3)';
+        ctx.setLineDash([5, 5]);
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Draw spacecraft position
+        const angle = (Date.now() / 5000) % (Math.PI * 2);
+        const spacecraftX = 200 + Math.cos(angle) * 120;
+        const spacecraftY = height / 2 + Math.sin(angle) * 60;
+
+        ctx.beginPath();
+        ctx.arc(spacecraftX, spacecraftY, 6, 0, Math.PI * 2);
+        ctx.fillStyle = '#00ff88';
+        ctx.fill();
+        ctx.shadowColor = '#00ff88';
+        ctx.shadowBlur = 15;
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+
+        // Draw direction arrow
+        const arrowX = spacecraftX + Math.cos(angle) * 15;
+        const arrowY = spacecraftY + Math.sin(angle) * 15;
+        ctx.beginPath();
+        ctx.moveTo(arrowX, arrowY);
+        ctx.lineTo(arrowX - 8, arrowY - 4);
+        ctx.lineTo(arrowX - 8, arrowY + 4);
+        ctx.closePath();
+        ctx.fillStyle = '#00ff88';
+        ctx.fill();
+
+        // Request next frame
+        requestAnimationFrame(() => this.drawTrajectory());
+    }
+
+    addLogEntry(type, message) {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+
+        const entry = document.createElement('div');
+        entry.className = `log-entry ${type}`;
+        entry.innerHTML = `
+            <span class="log-time">[${hours}:${minutes}:${seconds}]</span>
+            <span class="log-type">[${type.toUpperCase()}]</span>
+            <span class="log-message">${message}</span>
+        `;
+
+        if (this.elements.missionLog) {
+            this.elements.missionLog.appendChild(entry);
+            this.elements.missionLog.scrollTop = this.elements.missionLog.scrollHeight;
+
+            // Keep only last 50 entries
+            while (this.elements.missionLog.children.length > 50) {
+                this.elements.missionLog.removeChild(this.elements.missionLog.firstChild);
+            }
+        }
+    }
+
+    initiateLaunch() {
+        if (this.isLaunched) return;
+
+        this.isLaunched = true;
+        this.addLogEntry('success', 'Launch sequence initiated!');
+        this.addLogEntry('info', 'Main engines ignited');
+        this.addLogEntry('info', 'Liftoff confirmed');
+
+        // Update button
+        if (this.elements.launchBtn) {
+            this.elements.launchBtn.textContent = 'LAUNCH IN PROGRESS';
+            this.elements.launchBtn.disabled = true;
+        }
+
+        // Animate fuel gauge
+        if (this.elements.fuelGauge && this.elements.fuelPercent) {
+            let fuel = 87;
+            const fuelInterval = setInterval(() => {
+                fuel -= 0.5;
+                if (fuel <= 0) {
+                    fuel = 0;
+                    clearInterval(fuelInterval);
+                }
+                const offset = 251.2 * (1 - fuel / 100);
+                this.elements.fuelGauge.style.strokeDashoffset = offset;
+                this.elements.fuelPercent.textContent = `${fuel.toFixed(0)}%`;
+            }, 500);
+        }
+
+        // Simulate launch events
+        setTimeout(() => this.addLogEntry('info', 'Max Q passed'), 3000);
+        setTimeout(() => this.addLogEntry('success', 'Stage separation confirmed'), 8000);
+        setTimeout(() => this.addLogEntry('info', 'Second stage ignition'), 9000);
+        setTimeout(() => this.addLogEntry('success', 'Orbit insertion successful!'), 15000);
+    }
+
+    addEventListeners() {
+        if (this.elements.launchBtn) {
+            this.elements.launchBtn.addEventListener('click', () => this.initiateLaunch());
+        }
+
+        // Random system events
+        setInterval(() => {
+            if (Math.random() > 0.8) {
+                const events = [
+                    { type: 'info', message: 'Telemetry update received' },
+                    { type: 'info', message: 'Ground station handover' },
+                    { type: 'success', message: 'System check passed' },
+                    { type: 'info', message: 'Navigation calibration complete' }
+                ];
+                const event = events[Math.floor(Math.random() * events.length)];
+                this.addLogEntry(event.type, event.message);
+            }
+        }, 10000);
+    }
+}
+
+// ============================================
 // NASA DATA COMPONENTS INITIALIZATION
 // ============================================
 class NASAComponents {
