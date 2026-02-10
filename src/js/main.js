@@ -4,13 +4,306 @@
  */
 
 import { Starfield } from './modules/Starfield.js';
-import { Navbar } from './modules/Navbar.js';
-import { MobileMenu } from './modules/MobileMenu.js';
-import { PlanetInteraction } from './modules/PlanetInteraction.js';
-import { NewsletterForm } from './modules/NewsletterForm.js';
-import { SmoothScroll } from './modules/SmoothScroll.js';
-import { ScrollAnimations } from './modules/ScrollAnimations.js';
-import { EasterEggs } from './modules/EasterEggs.js';
+
+/**
+ * Mobile Menu Handler
+ */
+class MobileMenu {
+  constructor(hamburgerSelector, menuSelector) {
+    this.hamburger = document.querySelector(hamburgerSelector);
+    this.menu = document.querySelector(menuSelector);
+    this.isOpen = false;
+    
+    if (this.hamburger && this.menu) {
+      this.init();
+    }
+  }
+  
+  init() {
+    this.hamburger.addEventListener('click', () => this.toggle());
+    
+    // Close on link click
+    const links = this.menu.querySelectorAll('a');
+    links.forEach(link => {
+      link.addEventListener('click', () => this.close());
+    });
+  }
+  
+  toggle() {
+    this.isOpen = !this.isOpen;
+    this.hamburger.classList.toggle('active', this.isOpen);
+    this.menu.classList.toggle('active', this.isOpen);
+    document.body.classList.toggle('menu-open', this.isOpen);
+  }
+  
+  close() {
+    this.isOpen = false;
+    this.hamburger.classList.remove('active');
+    this.menu.classList.remove('active');
+    document.body.classList.remove('menu-open');
+  }
+}
+
+/**
+ * Planet Interaction Handler
+ */
+class PlanetInteraction {
+  constructor(planetSelector, infoSelector) {
+    this.planets = document.querySelectorAll(planetSelector);
+    this.infoPanel = document.querySelector(infoSelector);
+    this.planetData = {
+      mercury: {
+        name: 'Mercury',
+        diameter: '4,879 km',
+        distance: '57.9 million km from Sun',
+        temperature: '167°C avg',
+        moons: '0',
+        day: '59 Earth days',
+        year: '88 Earth days',
+        description: 'The smallest planet in our solar system and closest to the Sun—is only slightly larger than Earth\'s Moon. Mercury is the fastest planet, zipping around the Sun every 88 Earth days.'
+      },
+      venus: {
+        name: 'Venus',
+        diameter: '12,104 km',
+        distance: '108.2 million km from Sun',
+        temperature: '464°C',
+        moons: '0',
+        day: '243 Earth days',
+        year: '225 Earth days',
+        description: 'Spinning in the opposite direction to most planets, Venus is the hottest planet in our solar system with a thick atmosphere that traps heat in a runaway greenhouse effect.'
+      },
+      earth: {
+        name: 'Earth',
+        diameter: '12,742 km',
+        distance: '149.6 million km from Sun',
+        temperature: '15°C avg',
+        moons: '1',
+        day: '24 hours',
+        year: '365.25 days',
+        description: 'Our home planet is the only place we know of so far that\'s inhabited by living things. It\'s also the only planet in our solar system with liquid water on the surface.'
+      },
+      mars: {
+        name: 'Mars',
+        diameter: '6,779 km',
+        distance: '227.9 million km from Sun',
+        temperature: '-65°C avg',
+        moons: '2',
+        day: '24.6 hours',
+        year: '687 Earth days',
+        description: 'Mars is a dusty, cold, desert world with a very thin atmosphere. There is strong evidence that Mars was – billions of years ago – wetter and warmer, with a thick atmosphere.'
+      },
+      jupiter: {
+        name: 'Jupiter',
+        diameter: '139,820 km',
+        distance: '778.5 million km from Sun',
+        temperature: '-110°C avg',
+        moons: '95',
+        day: '9.9 hours',
+        year: '11.9 Earth years',
+        description: 'Jupiter is more than twice as massive as all the other planets combined. The Great Red Spot is a centuries-old storm bigger than Earth.'
+      },
+      saturn: {
+        name: 'Saturn',
+        diameter: '116,460 km',
+        distance: '1.4 billion km from Sun',
+        temperature: '-140°C avg',
+        moons: '146',
+        day: '10.7 hours',
+        year: '29.5 Earth years',
+        description: 'Adorned with a dazzling, complex system of icy rings, Saturn is unique in our solar system. The other giant planets have rings, but none are as spectacular as Saturn\'s.'
+      },
+      uranus: {
+        name: 'Uranus',
+        diameter: '50,724 km',
+        distance: '2.9 billion km from Sun',
+        temperature: '-195°C avg',
+        moons: '27',
+        day: '17.2 hours',
+        year: '84 Earth years',
+        description: 'Uranus rotates at a nearly 90-degree angle from the plane of its orbit. This unique tilt makes Uranus appear to spin on its side.'
+      },
+      neptune: {
+        name: 'Neptune',
+        diameter: '49,244 km',
+        distance: '4.5 billion km from Sun',
+        temperature: '-200°C avg',
+        moons: '14',
+        day: '16.1 hours',
+        year: '165 Earth years',
+        description: 'Neptune is dark, cold and whipped by supersonic winds. It was the first planet located through mathematical calculations rather than by telescope.'
+      }
+    };
+    
+    this.init();
+  }
+  
+  init() {
+    this.planets.forEach(planet => {
+      planet.addEventListener('click', (e) => {
+        const planetKey = e.currentTarget.dataset.planet;
+        this.showInfo(planetKey);
+      });
+    });
+    
+    // Close button
+    const closeBtn = this.infoPanel?.querySelector('.close-info');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => this.hideInfo());
+    }
+  }
+  
+  showInfo(planetKey) {
+    const data = this.planetData[planetKey];
+    if (!data || !this.infoPanel) return;
+    
+    this.infoPanel.innerHTML = `
+      <button class="close-info" aria-label="Close">×</button>
+      <h2>${data.name}</h2>
+      <p class="planet-description">${data.description}</p>
+      <div class="planet-stats">
+        <div class="stat"><span class="stat-label">Diameter:</span> ${data.diameter}</div>
+        <div class="stat"><span class="stat-label">Distance from Sun:</span> ${data.distance}</div>
+        <div class="stat"><span class="stat-label">Temperature:</span> ${data.temperature}</div>
+        <div class="stat"><span class="stat-label">Moons:</span> ${data.moons}</div>
+        <div class="stat"><span class="stat-label">Day Length:</span> ${data.day}</div>
+        <div class="stat"><span class="stat-label">Year Length:</span> ${data.year}</div>
+      </div>
+    `;
+    
+    this.infoPanel.classList.add('active');
+    
+    // Re-bind close button
+    const closeBtn = this.infoPanel.querySelector('.close-info');
+    closeBtn.addEventListener('click', () => this.hideInfo());
+  }
+  
+  hideInfo() {
+    this.infoPanel?.classList.remove('active');
+  }
+}
+
+/**
+ * Newsletter Form Handler
+ */
+class NewsletterForm {
+  constructor(formSelector) {
+    this.form = document.querySelector(formSelector);
+    this.messageEl = document.getElementById('form-message');
+    
+    if (this.form) {
+      this.init();
+    }
+  }
+  
+  init() {
+    this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+  }
+  
+  handleSubmit(e) {
+    e.preventDefault();
+    const email = this.form.querySelector('input[type="email"]').value;
+    
+    if (this.validateEmail(email)) {
+      this.showMessage('🚀 Welcome aboard! You\'re now subscribed to cosmic updates.', 'success');
+      this.form.reset();
+    } else {
+      this.showMessage('⚠️ Please enter a valid email address.', 'error');
+    }
+  }
+  
+  validateEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+  
+  showMessage(text, type) {
+    if (this.messageEl) {
+      this.messageEl.textContent = text;
+      this.messageEl.className = `form-message ${type}`;
+      setTimeout(() => {
+        this.messageEl.textContent = '';
+        this.messageEl.className = 'form-message';
+      }, 5000);
+    }
+  }
+}
+
+/**
+ * Smooth Scroll Handler
+ */
+class SmoothScroll {
+  constructor(linkSelector) {
+    this.links = document.querySelectorAll(linkSelector);
+    this.init();
+  }
+  
+  init() {
+    this.links.forEach(link => {
+      link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        if (href.startsWith('#')) {
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      });
+    });
+  }
+}
+
+/**
+ * Scroll Animations
+ */
+class ScrollAnimations {
+  constructor(selector) {
+    this.elements = document.querySelectorAll(selector);
+    this.init();
+  }
+  
+  init() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animated');
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    this.elements.forEach(el => observer.observe(el));
+  }
+}
+
+/**
+ * Easter Eggs
+ */
+class EasterEggs {
+  constructor() {
+    this.konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+    this.inputSequence = [];
+    this.init();
+  }
+  
+  init() {
+    document.addEventListener('keydown', (e) => {
+      this.inputSequence.push(e.key);
+      this.inputSequence = this.inputSequence.slice(-10);
+      
+      if (this.inputSequence.join(',') === this.konamiCode.join(',')) {
+        this.activateRainbowMode();
+      }
+    });
+  }
+  
+  activateRainbowMode() {
+    document.body.classList.add('rainbow-mode');
+    console.log('🌈 Rainbow mode activated!');
+    
+    setTimeout(() => {
+      document.body.classList.remove('rainbow-mode');
+    }, 10000);
+  }
+}
 
 /**
  * Main application class
@@ -42,8 +335,7 @@ class CosmicVoyage {
       this.modules.starfield = new Starfield('#starfield');
 
       // Navigation
-      this.modules.navbar = new Navbar('.navbar');
-      this.modules.mobileMenu = new MobileMenu('.hamburger', '.navbar-menu');
+      this.modules.mobileMenu = new MobileMenu('.hamburger', '.nav-menu');
 
       // Interactive features
       this.modules.planetInteraction = new PlanetInteraction('.planet-body', '#planet-info');
@@ -51,6 +343,13 @@ class CosmicVoyage {
 
       // Utilities
       this.modules.smoothScroll = new SmoothScroll('a[href^="#"]');
+      
+      // Animate elements on scroll
+      const animatedElements = document.querySelectorAll('.fact-card, .section-header');
+      animatedElements.forEach((el, i) => {
+        el.classList.add('animate-on-scroll');
+        el.style.animationDelay = `${i * 100}ms`;
+      });
       this.modules.scrollAnimations = new ScrollAnimations('.animate-on-scroll');
 
       // Fun stuff

@@ -205,6 +205,103 @@ class NASAAPIService {
     }
     
     /**
+     * Get fallback data when API is unavailable
+     */
+    getFallbackData(cacheKey, endpoint) {
+        // APOD fallback
+        if (endpoint.includes('/planetary/apod') && !endpoint.includes('start_date')) {
+            return {
+                date: new Date().toISOString().split('T')[0],
+                explanation: "The Eagle Nebula, also known as Messier 16, is a young open cluster of stars in the constellation Serpens. The nebula contains several active star-forming gas and dust regions, including the famous Pillars of Creation. These towering structures are columns of cosmic dust and gas that serve as incubators for new stars.",
+                hdurl: "https://apod.nasa.gov/apod/image/2309/EagleNebula_Webb_3329.jpg",
+                media_type: "image",
+                service_version: "v1",
+                title: "The Eagle Nebula - Pillars of Creation",
+                url: "https://apod.nasa.gov/apod/image/2309/EagleNebula_Webb_3329.jpg",
+                copyright: "NASA, ESA, CSA, STScI; Processing: J. C. Canonigo"
+            };
+        }
+        
+        // Mars photos fallback
+        if (endpoint.includes('/mars-photos/api/v1/rovers/')) {
+            const roverMatch = endpoint.match(/rovers\/(\w+)/);
+            const roverName = roverMatch ? roverMatch[1].charAt(0).toUpperCase() + roverMatch[1].slice(1) : 'Curiosity';
+            return {
+                photos: [
+                    {
+                        id: 1,
+                        sol: 4000,
+                        camera: { id: 1, name: 'FHAZ', full_name: 'Front Hazard Avoidance Camera', rover_id: 1 },
+                        img_src: 'https://mars.nasa.gov/msl-raw-images/proj/msl/redops/ods/surface/sol/04000/opgs/edr/fcam/FRB_400000000EDR_F0000000FHAZ00323M_.JPG',
+                        earth_date: '2023-10-15',
+                        rover: { id: 1, name: roverName, landing_date: '2012-08-06', launch_date: '2011-11-26', status: 'active' }
+                    },
+                    {
+                        id: 2,
+                        sol: 4000,
+                        camera: { id: 2, name: 'RHAZ', full_name: 'Rear Hazard Avoidance Camera', rover_id: 1 },
+                        img_src: 'https://mars.nasa.gov/msl-raw-images/proj/msl/redops/ods/surface/sol/04000/opgs/edr/rcam/RRB_400000000EDR_F0000000RHAZ00323M_.JPG',
+                        earth_date: '2023-10-15',
+                        rover: { id: 1, name: roverName, landing_date: '2012-08-06', launch_date: '2011-11-26', status: 'active' }
+                    },
+                    {
+                        id: 3,
+                        sol: 4000,
+                        camera: { id: 3, name: 'MAST', full_name: 'Mast Camera', rover_id: 1 },
+                        img_src: 'https://mars.nasa.gov/msl-raw-images/msss/04000/mcam/4000ML0151100001205345C00_DXXX.jpg',
+                        earth_date: '2023-10-15',
+                        rover: { id: 1, name: roverName, landing_date: '2012-08-06', launch_date: '2011-11-26', status: 'active' }
+                    },
+                    {
+                        id: 4,
+                        sol: 4000,
+                        camera: { id: 4, name: 'NAVCAM', full_name: 'Navigation Camera', rover_id: 1 },
+                        img_src: 'https://mars.nasa.gov/msl-raw-images/proj/msl/redops/ods/surface/sol/04000/opgs/edr/ncam/NLB_400000000EDR_F0000000NCAM00323M_.JPG',
+                        earth_date: '2023-10-15',
+                        rover: { id: 1, name: roverName, landing_date: '2012-08-06', launch_date: '2011-11-26', status: 'active' }
+                    }
+                ]
+            };
+        }
+        
+        // Gallery/range fallback
+        if (endpoint.includes('/planetary/apod?count=') || endpoint.includes('start_date')) {
+            return [
+                {
+                    date: new Date(Date.now() - 86400000).toISOString().split('T')[0],
+                    title: "Andromeda Galaxy",
+                    url: "https://apod.nasa.gov/apod/image/2309/AndromedaGalaxy_HubbleGendler_3000.jpg",
+                    media_type: "image",
+                    explanation: "The Andromeda Galaxy is a barred spiral galaxy approximately 2.5 million light-years from Earth."
+                },
+                {
+                    date: new Date(Date.now() - 172800000).toISOString().split('T')[0],
+                    title: "Orion Nebula",
+                    url: "https://apod.nasa.gov/apod/image/2309/OrionNebula_Hubble_3000.jpg",
+                    media_type: "image",
+                    explanation: "The Orion Nebula is a diffuse nebula situated in the Milky Way, south of Orion's Belt."
+                },
+                {
+                    date: new Date(Date.now() - 259200000).toISOString().split('T')[0],
+                    title: "Ring Nebula",
+                    url: "https://apod.nasa.gov/apod/image/2309/RingNebula_Webb_3000.jpg",
+                    media_type: "image",
+                    explanation: "The Ring Nebula is a planetary nebula in the northern constellation of Lyra."
+                },
+                {
+                    date: new Date(Date.now() - 345600000).toISOString().split('T')[0],
+                    title: "Whirlpool Galaxy",
+                    url: "https://apod.nasa.gov/apod/image/2309/WhirlpoolGalaxy_Hubble_3000.jpg",
+                    media_type: "image",
+                    explanation: "The Whirlpool Galaxy is an interacting grand-design spiral galaxy with a Seyfert 2 active galactic nucleus."
+                }
+            ];
+        }
+        
+        return null;
+    }
+
+    /**
      * Clear all cached data
      */
     clearCache() {
