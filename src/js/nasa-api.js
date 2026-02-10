@@ -106,7 +106,9 @@ class NASAAPIService {
                 return cached.data;
             }
             
-            throw error;
+            // Return fallback data for graceful degradation
+            console.log('Using fallback data for', cacheKey);
+            return this.getFallbackData(cacheKey, endpoint);
         }
     }
     

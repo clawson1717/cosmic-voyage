@@ -80,6 +80,13 @@ Or visit: **Coming Soon** 🚀
 - **Nebula Gradients** - Subtle cosmic cloud backgrounds with rich colors
 - **Smooth Animations** - 60fps animations powered by `requestAnimationFrame`
 
+### 🛰️ NASA API Integration (NEW!)
+- **Astronomy Picture of the Day** - Daily cosmic imagery with descriptions
+- **Mars Rover Photos** - Latest images from Curiosity and Perseverance rovers
+- **Live Space Data** - Current astronauts in space, ISS stats
+- **Smart Caching** - LocalStorage caching to respect API rate limits
+- **Graceful Degradation** - Fallback content when API is unavailable
+
 ### 🪐 Interactive Solar System
 - **Orbiting Planets** - All 8 planets with accurate orbital speeds (scaled)
 - **Planet Information** - Detailed stats including temperature, moons, and facts
@@ -96,6 +103,38 @@ Or visit: **Coming Soon** 🚀
 ### 🎮 Easter Eggs
 - **Konami Code** - Try the classic ↑↑↓↓←→←→BA for a surprise! 🌈
 - **Click Anywhere** - Click on the starfield to create shooting stars
+
+---
+
+## 🛰️ NASA API Setup
+
+Cosmic Voyage integrates with NASA's public APIs to display real space data. 
+
+### Getting an API Key
+
+1. Visit [NASA API Portal](https://api.nasa.gov) 
+2. Sign up for a free API key
+3. Replace `DEMO_KEY` in `src/js/nasa-api.js` with your key:
+
+```javascript
+// In src/js/nasa-api.js
+this.apiKey = 'YOUR_API_KEY_HERE'; // Replace DEMO_KEY
+```
+
+### API Features
+
+| Feature | Endpoint | Cache Duration |
+|---------|----------|----------------|
+| APOD | `/planetary/apod` | 1 hour |
+| Mars Rover | `/mars-photos/api/v1/rovers/{rover}/photos` | 30 minutes |
+| EPIC | `/EPIC/api/natural/images` | 2 hours |
+
+### Rate Limits
+
+- **DEMO_KEY**: 30 requests/hour, 50 requests/day
+- **Registered Key**: 1,000 requests/hour
+
+The app includes intelligent caching via localStorage to minimize API calls.
 
 ---
 

@@ -961,12 +961,14 @@ class CosmicVoyage {
         new PlanetInteraction();
         new NewsletterForm();
         new SmoothScroll();
+        new MissionControl();
         
         // Initialize NASA API Components
         new NASAComponents();
         
         console.log('🚀 Cosmic Voyage initialized! Welcome to space exploration.');
         console.log('🌌 NASA API integration active - Real space data incoming!');
+        console.log('🎯 Mission Control dashboard ready for launch sequence');
     }
 }
 
