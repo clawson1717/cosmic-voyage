@@ -17,6 +17,7 @@ class APODComponent {
             ...options
         };
         this.nasaAPI = nasaAPI; // Uses global instance from nasa-api.js
+        this.imageLoaded = false;
     }
     
     async render(date = null) {
@@ -25,36 +26,61 @@ class APODComponent {
             return;
         }
         
-        // Show loading state
-        this.container.innerHTML = this.getLoadingHTML();
+        // Show skeleton loading state
+        this.container.innerHTML = this.getSkeletonHTML();
+        this.container.classList.add('apod-loading');
         
         try {
             const data = await this.nasaAPI.getAPOD(date);
+            this.container.classList.remove('apod-loading');
             this.container.innerHTML = this.getAPODHTML(data);
             this.attachEventListeners();
+            
+            // Handle image loading for non-video content
+            if (data.media_type !== 'video') {
+                this.handleImageLoading();
+            } else {
+                // For videos, hide skeleton immediately
+                this.hideSkeleton();
+            }
         } catch (error) {
+            this.container.classList.remove('apod-loading');
             this.container.innerHTML = this.getErrorHTML(error);
         }
     }
     
-    getLoadingHTML() {
+    getSkeletonHTML() {
         return `
-            <div class="nasa-loading">
-                <div class="nasa-spinner"></div>
-                <p>Loading cosmic imagery from NASA...</p>
-            </div>
-        `;
-    }
-    
-    getErrorHTML(error) {
-        return `
-            <div class="nasa-error">
-                <div class="nasa-error-icon">🛰️</div>
-                <h3>Signal Lost</h3>
-                <p>Unable to retrieve data from NASA. ${error.message}</p>
-                <button class="btn btn-secondary" onclick="this.closest('.nasa-component').querySelector('.apod-component').reload()">
-                    Retry Connection
-                </button>
+            <div class="apod-card nasa-card apod-skeleton-wrapper">
+                <div class="apod-header">
+                    <div class="apod-badge skeleton-badge">
+                        <span class="badge-icon">🌌</span>
+                        <span class="badge-text skeleton-text-short">Astronomy Picture of the Day</span>
+                    </div>
+                    <div class="skeleton-date"></div>
+                </div>
+                
+                <div class="apod-media-skeleton">
+                    <div class="skeleton-image">
+                        <div class="skeleton-shimmer"></div>
+                        <div class="skeleton-icon">
+                            <svg viewBox="0 0 24 24" width="48" height="48">
+                                <path fill="currentColor" d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="apod-content-skeleton">
+                    <div class="skeleton-title"></div>
+                    <div class="skeleton-text skeleton-text-1"></div>
+                    <div class="skeleton-text skeleton-text-2"></div>
+                    <div class="skeleton-text skeleton-text-3"></div>
+                    <div class="skeleton-meta">
+                        <div class="skeleton-copyright"></div>
+                        <div class="skeleton-link"></div>
+                    </div>
+                </div>
             </div>
         `;
     }
@@ -66,7 +92,10 @@ class APODComponent {
                 <iframe src="${data.url}" frameborder="0" allowfullscreen></iframe>
                </div>`
             : `<div class="apod-image-container">
-                <img src="${data.url}" alt="${data.title}" loading="lazy">
+                <img src="${data.url}" alt="${data.title}" loading="lazy" class="apod-main-image" style="opacity: 0; transition: opacity 0.5s ease;">
+                <div class="apod-image-skeleton">
+                    <div class="skeleton-shimmer"></div>
+                </div>
                 <div class="apod-image-overlay">
                     <button class="apod-fullscreen-btn" title="View Full Size">
                         <svg viewBox="0 0 24 24" width="24" height="24">
@@ -112,6 +141,83 @@ class APODComponent {
         `;
     }
     
+    handleImageLoading() {
+        const img = this.container.querySelector('.apod-main-image');
+        const skeleton = this.container.querySelector('.apod-image-skeleton');
+        
+        if (!img) return;
+        
+        // If image is already cached and loaded
+        if (img.complete && img.naturalWidth !== 0) {
+            this.showImage(img, skeleton);
+        } else {
+            // Wait for image to load
+            img.addEventListener('load', () => {
+                this.showImage(img, skeleton);
+            });
+            
+            img.addEventListener('error', () => {
+                this.handleImageError();
+            });
+            
+            // Timeout fallback - show image anyway after 10 seconds
+            setTimeout(() => {
+                if (img.style.opacity === '0') {
+                    this.showImage(img, skeleton);
+                }
+            }, 10000);
+        }
+    }
+    
+    showImage(img, skeleton) {
+        img.style.opacity = '1';
+        if (skeleton) {
+            skeleton.style.opacity = '0';
+            setTimeout(() => {
+                skeleton.style.display = 'none';
+            }, 500);
+        }
+        this.imageLoaded = true;
+    }
+    
+    hideSkeleton() {
+        const skeleton = this.container.querySelector('.apod-image-skeleton');
+        if (skeleton) {
+            skeleton.style.opacity = '0';
+            setTimeout(() => {
+                skeleton.style.display = 'none';
+            }, 500);
+        }
+    }
+    
+    handleImageError() {
+        const container = this.container.querySelector('.apod-image-container');
+        if (container) {
+            container.innerHTML = `
+                <div class="apod-image-error">
+                    <div class="error-icon">🖼️</div>
+                    <p>Unable to load image</p>
+                    <button class="btn btn-secondary" onclick="location.reload()">Retry</button>
+                </div>
+            `;
+        }
+    }
+    
+    getErrorHTML(error) {
+        return `
+            <div class="apod-card nasa-card apod-error">
+                <div class="nasa-error">
+                    <div class="nasa-error-icon">🛰️</div>
+                    <h3>Signal Lost</h3>
+                    <p>Unable to retrieve data from NASA. ${error.message}</p>
+                    <button class="btn btn-secondary" onclick="this.closest('.apod-component')?.reload() || location.reload()">
+                        Retry Connection
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+    
     truncateText(text, maxLength) {
         if (text.length <= maxLength) return text;
         return text.substring(0, maxLength).trim() + '...';
@@ -131,9 +237,7 @@ class APODComponent {
         const imgContainer = this.container.querySelector('.apod-image-container');
         if (imgContainer) {
             imgContainer.addEventListener('click', (e) => {
-                if (e.target.closest('.apod-fullscreen-btn')) {
-                    this.openFullscreen();
-                } else {
+                if (e.target.closest('.apod-fullscreen-btn') || e.target.tagName === 'IMG') {
                     this.openFullscreen();
                 }
             });
@@ -142,7 +246,7 @@ class APODComponent {
     
     openFullscreen() {
         const img = this.container.querySelector('img');
-        if (img) {
+        if (img && this.imageLoaded) {
             const modal = document.createElement('div');
             modal.className = 'nasa-modal';
             modal.innerHTML = `
@@ -166,6 +270,7 @@ class APODComponent {
     }
     
     async reload() {
+        this.imageLoaded = false;
         this.render();
     }
 }

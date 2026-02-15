@@ -13,6 +13,7 @@ import '../css/_animations.css';
 import '../css/_responsive.css';
 import '../css/main.css';
 import '../css/styles.css';
+import '../css/apod-skeleton.css';
 
 import { Starfield } from './modules/Starfield.js';
 import { DarkMode } from './modules/DarkMode.js';
