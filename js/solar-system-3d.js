@@ -724,6 +724,80 @@ class SolarSystem3D {
         }, 1000);
     }
 
+    createHelpPanel() {
+        const helpPanel = document.createElement('div');
+        helpPanel.className = 'keyboard-help-panel';
+        helpPanel.innerHTML = `
+            <div class="help-panel-content">
+                <div class="help-header">
+                    <h3>🎮 Keyboard Controls</h3>
+                    <button class="close-help">&times;</button>
+                </div>
+                <div class="help-content">
+                    <div class="control-group">
+                        <span class="key">↑</span>
+                        <span class="key">↓</span>
+                        <span class="desc">Rotate camera up/down</span>
+                    </div>
+                    <div class="control-group">
+                        <span class="key">←</span>
+                        <span class="key">→</span>
+                        <span class="desc">Rotate camera left/right</span>
+                    </div>
+                    <div class="control-group">
+                        <span class="key">+</span>
+                        <span class="key">-</span>
+                        <span class="desc">Zoom in/out</span>
+                    </div>
+                    <div class="control-group">
+                        <span class="key">R</span>
+                        <span class="desc">Reset view to default</span>
+                    </div>
+                    <div class="control-group">
+                        <span class="key">Space</span>
+                        <span class="desc">Pause/resume animation</span>
+                    </div>
+                    <div class="control-group">
+                        <span class="key">H</span>
+                        <span class="key">?</span>
+                        <span class="desc">Toggle this help panel</span>
+                    </div>
+                    <div class="control-group">
+                        <span class="key">Esc</span>
+                        <span class="desc">Close info panel</span>
+                    </div>
+                </div>
+                <div class="help-hint">
+                    <span>Press <kbd>H</kbd> or <kbd>?</kbd> to toggle help</span>
+                </div>
+            </div>
+        `;
+        this.container.appendChild(helpPanel);
+        this.helpPanel = helpPanel;
+
+        // Close button handler
+        helpPanel.querySelector('.close-help').addEventListener('click', () => {
+            this.toggleHelpPanel();
+        });
+
+        // Show help hint briefly
+        setTimeout(() => {
+            const hint = helpPanel.querySelector('.help-hint');
+            if (hint) {
+                hint.classList.add('visible');
+                setTimeout(() => {
+                    hint.classList.remove('visible');
+                }, 4000);
+            }
+        }, 2000);
+    }
+
+    toggleHelpPanel() {
+        if (this.helpPanel) {
+            this.helpPanel.classList.toggle('active');
+        }
+    }
+
     addEventListeners() {
         // Window resize
         window.addEventListener('resize', () => this.onWindowResize());
@@ -758,15 +832,129 @@ class SolarSystem3D {
             this.focusOnObject(this.sun);
         });
 
-        // Keyboard shortcuts
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
+        // Keyboard controls
+        this.keys = {
+            ArrowUp: false,
+            ArrowDown: false,
+            ArrowLeft: false,
+            ArrowRight: false
+        };
+        this.keyRotationSpeed = 0.02;
+        this.zoomSpeed = 5;
+
+        document.addEventListener('keydown', (e) => this.handleKeyDown(e));
+        document.addEventListener('keyup', (e) => this.handleKeyUp(e));
+
+        // Create help panel
+        this.createHelpPanel();
+    }
+
+    handleKeyDown(e) {
+        // Prevent default for arrow keys to avoid page scrolling
+        if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(e.key)) {
+            e.preventDefault();
+        }
+
+        switch (e.key) {
+            case 'Escape':
                 this.closeInfoPanel();
-            } else if (e.key === ' ') {
-                e.preventDefault();
+                break;
+            case ' ':
                 this.isPaused = !this.isPaused;
-            }
-        });
+                break;
+            case 'ArrowUp':
+                this.keys.ArrowUp = true;
+                break;
+            case 'ArrowDown':
+                this.keys.ArrowDown = true;
+                break;
+            case 'ArrowLeft':
+                this.keys.ArrowLeft = true;
+                break;
+            case 'ArrowRight':
+                this.keys.ArrowRight = true;
+                break;
+            case '+':
+            case '=':
+                this.zoomCamera(-this.zoomSpeed);
+                break;
+            case '-':
+            case '_':
+                this.zoomCamera(this.zoomSpeed);
+                break;
+            case 'r':
+            case 'R':
+                this.resetView();
+                break;
+            case 'h':
+            case 'H':
+            case '?':
+                this.toggleHelpPanel();
+                break;
+        }
+    }
+
+    handleKeyUp(e) {
+        switch (e.key) {
+            case 'ArrowUp':
+                this.keys.ArrowUp = false;
+                break;
+            case 'ArrowDown':
+                this.keys.ArrowDown = false;
+                break;
+            case 'ArrowLeft':
+                this.keys.ArrowLeft = false;
+                break;
+            case 'ArrowRight':
+                this.keys.ArrowRight = false;
+                break;
+        }
+    }
+
+    zoomCamera(delta) {
+        if (!this.camera || !this.controls) return;
+
+        const direction = new THREE.Vector3();
+        this.camera.getWorldDirection(direction);
+
+        // Move camera along its view direction
+        const newPosition = this.camera.position.clone().add(direction.multiplyScalar(delta));
+
+        // Clamp distance to min/max
+        const distance = newPosition.distanceTo(this.controls.target);
+        if (distance >= this.controls.minDistance && distance <= this.controls.maxDistance) {
+            this.camera.position.copy(newPosition);
+        }
+    }
+
+    rotateCameraFromKeys() {
+        if (!this.camera || !this.controls) return;
+
+        const target = this.controls.target;
+        const position = this.camera.position;
+        const offset = position.clone().sub(target);
+
+        // Spherical coordinates for smooth rotation
+        const spherical = new THREE.Spherical().setFromVector3(offset);
+
+        // Apply rotation based on key states
+        if (this.keys.ArrowUp) {
+            spherical.phi = Math.max(0.1, Math.min(Math.PI - 0.1, spherical.phi - this.keyRotationSpeed));
+        }
+        if (this.keys.ArrowDown) {
+            spherical.phi = Math.max(0.1, Math.min(Math.PI - 0.1, spherical.phi + this.keyRotationSpeed));
+        }
+        if (this.keys.ArrowLeft) {
+            spherical.theta += this.keyRotationSpeed;
+        }
+        if (this.keys.ArrowRight) {
+            spherical.theta -= this.keyRotationSpeed;
+        }
+
+        // Convert back to Cartesian and update camera position
+        offset.setFromSpherical(spherical);
+        position.copy(target).add(offset);
+        this.camera.lookAt(target);
     }
 
     onWindowResize() {
@@ -964,6 +1152,9 @@ class SolarSystem3D {
             this.controls.update();
         }
 
+        // Handle keyboard camera rotation
+        this.rotateCameraFromKeys();
+
         // Animate planets
         if (!this.isPaused) {
             this.planets.forEach((planetGroup, index) => {
@@ -1018,6 +1209,10 @@ class SolarSystem3D {
         
         if (this.controlsPanel) {
             this.container.removeChild(this.controlsPanel);
+        }
+
+        if (this.helpPanel) {
+            this.container.removeChild(this.helpPanel);
         }
     }
 }

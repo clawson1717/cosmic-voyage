@@ -392,3 +392,221 @@
     height: 20px;
     fill: #00d4ff;
 }
+
+/* Keyboard Help Panel */
+.keyboard-help-panel {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    background: rgba(10, 10, 25, 0.95);
+    border: 1px solid rgba(0, 212, 255, 0.4);
+    border-radius: 16px;
+    padding: 0;
+    backdrop-filter: blur(20px);
+    z-index: 60;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.6),
+        0 0 40px rgba(0, 212, 255, 0.2);
+    min-width: 320px;
+    max-width: 90vw;
+}
+
+.keyboard-help-panel.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.help-panel-content {
+    position: relative;
+    padding: 1.5rem;
+}
+
+.help-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.help-header h3 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.1rem;
+    color: #00d4ff;
+    margin: 0;
+    text-shadow: 0 0 15px rgba(0, 212, 255, 0.4);
+}
+
+.close-help {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: #fff;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    font-size: 1.25rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.close-help:hover {
+    background: rgba(230, 57, 70, 0.8);
+    transform: rotate(90deg);
+}
+
+.help-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.control-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+}
+
+.control-group .key {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 32px;
+    padding: 0 0.5rem;
+    background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #fff;
+    box-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.control-group .desc {
+    font-size: 0.9rem;
+    color: #adb5bd;
+    flex: 1;
+}
+
+.help-hint {
+    margin-top: 1rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.5s ease;
+}
+
+.help-hint.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.help-hint span {
+    font-size: 0.8rem;
+    color: #6c757d;
+}
+
+.help-hint kbd {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px;
+    height: 24px;
+    padding: 0 0.4rem;
+    background: rgba(0, 212, 255, 0.15);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    border-radius: 4px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.7rem;
+    color: #00d4ff;
+    margin: 0 0.15rem;
+}
+
+/* Light theme adjustments */
+[data-theme="light"] .keyboard-help-panel {
+    background: rgba(240, 240, 245, 0.98);
+    border-color: rgba(0, 150, 200, 0.4);
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.2),
+        0 0 40px rgba(0, 150, 200, 0.15);
+}
+
+[data-theme="light"] .help-header {
+    border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .help-header h3 {
+    color: #0077aa;
+    text-shadow: 0 0 10px rgba(0, 150, 200, 0.3);
+}
+
+[data-theme="light"] .control-group .key {
+    background: linear-gradient(180deg, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.03) 100%);
+    border-color: rgba(0, 0, 0, 0.15);
+    color: #333;
+    box-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    text-shadow: none;
+}
+
+[data-theme="light"] .control-group .desc {
+    color: #555;
+}
+
+[data-theme="light"] .help-hint {
+    border-top-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .help-hint span {
+    color: #777;
+}
+
+[data-theme="light"] .help-hint kbd {
+    background: rgba(0, 150, 200, 0.1);
+    border-color: rgba(0, 150, 200, 0.3);
+    color: #0077aa;
+}
+
+/* Responsive adjustments for help panel */
+@media (max-width: 480px) {
+    .keyboard-help-panel {
+        min-width: 280px;
+        width: calc(100vw - 2rem);
+    }
+
+    .help-panel-content {
+        padding: 1.25rem;
+    }
+
+    .help-header h3 {
+        font-size: 1rem;
+    }
+
+    .control-group .key {
+        min-width: 32px;
+        height: 28px;
+        font-size: 0.75rem;
+    }
+
+    .control-group .desc {
+        font-size: 0.85rem;
+    }
+}
