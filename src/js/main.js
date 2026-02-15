@@ -296,25 +296,85 @@ class EasterEggs {
     this.inputSequence = [];
     this.init();
   }
-  
+
   init() {
     document.addEventListener('keydown', (e) => {
       this.inputSequence.push(e.key);
       this.inputSequence = this.inputSequence.slice(-10);
-      
+
       if (this.inputSequence.join(',') === this.konamiCode.join(',')) {
         this.activateRainbowMode();
       }
     });
   }
-  
+
   activateRainbowMode() {
     document.body.classList.add('rainbow-mode');
     console.log('🌈 Rainbow mode activated!');
-    
+
     setTimeout(() => {
       document.body.classList.remove('rainbow-mode');
     }, 10000);
+  }
+}
+
+/**
+ * Scroll to Top Button
+ */
+class ScrollToTop {
+  constructor(buttonSelector, options = {}) {
+    this.button = document.querySelector(buttonSelector);
+    this.options = {
+      showAfter: 300,
+      smoothBehavior: 'smooth',
+      ...options
+    };
+
+    if (this.button) {
+      this.init();
+    }
+  }
+
+  init() {
+    // Bind scroll event with throttling for performance
+    this.throttledScrollHandler = this.throttle(() => this.handleScroll(), 100);
+    window.addEventListener('scroll', this.throttledScrollHandler);
+
+    // Bind click event
+    this.button.addEventListener('click', () => this.scrollToTop());
+  }
+
+  handleScroll() {
+    const scrollY = window.scrollY || window.pageYOffset;
+
+    if (scrollY > this.options.showAfter) {
+      this.button.classList.add('visible');
+    } else {
+      this.button.classList.remove('visible');
+    }
+  }
+
+  scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: this.options.smoothBehavior
+    });
+  }
+
+  throttle(func, limit) {
+    let inThrottle;
+    return function(...args) {
+      if (!inThrottle) {
+        func.apply(this, args);
+        inThrottle = true;
+        setTimeout(() => inThrottle = false, limit);
+      }
+    };
+  }
+
+  destroy() {
+    window.removeEventListener('scroll', this.throttledScrollHandler);
+    this.button.removeEventListener('click', () => this.scrollToTop());
   }
 }
 
@@ -371,6 +431,9 @@ class CosmicVoyage {
 
       // Fun stuff
       this.modules.easterEggs = new EasterEggs();
+
+      // Scroll to top button
+      this.modules.scrollToTop = new ScrollToTop('#scroll-to-top');
 
       console.log('🚀 Cosmic Voyage initialized! Welcome to space exploration.');
     } catch (error) {
