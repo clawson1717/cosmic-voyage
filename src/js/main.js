@@ -14,10 +14,12 @@ import '../css/_responsive.css';
 import '../css/main.css';
 import '../css/styles.css';
 import '../css/apod-skeleton.css';
+import '../css/keyboard-shortcuts.css';
 
 import { Starfield } from './modules/Starfield.js';
 import { DarkMode } from './modules/DarkMode.js';
 import { FactsSearch } from './modules/FactsSearch.js';
+import { KeyboardShortcuts } from './modules/KeyboardShortcuts.js';
 
 /**
  * Mobile Menu Handler
@@ -642,6 +644,9 @@ class CosmicVoyage {
 
       // Fun stuff
       this.modules.easterEggs = new EasterEggs();
+
+      // Keyboard shortcuts for power users
+      this.modules.keyboardShortcuts = new KeyboardShortcuts();
 
       // Scroll to top button
       this.modules.scrollToTop = new ScrollToTop('#scroll-to-top');

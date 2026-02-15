@@ -100,9 +100,35 @@ Or visit: **Coming Soon** 🚀
 - **Adaptive Layouts** - CSS Grid and Flexbox for flexible layouts
 - **Performance Optimized** - Hardware acceleration and efficient rendering
 
+### ⌨️ Power User Features
+- **Keyboard Shortcuts** - GitHub-inspired navigation with `?` for help, `G`+letter for sections, `/` for search
+- **Quick Navigation** - Jump to any section with `G` key sequences (GH, GS, GF, etc.)
+- **Theme Toggle** - Press `T` to instantly switch between dark and light themes
+
 ### 🎮 Easter Eggs
 - **Konami Code** - Try the classic ↑↑↓↓←→←→BA for a surprise! 🌈
 - **Click Anywhere** - Click on the starfield to create shooting stars
+
+### ⌨️ Keyboard Shortcuts
+Navigate like a pro with GitHub-inspired keyboard shortcuts:
+
+| Shortcut | Action |
+|----------|--------|
+| `?` | Show/hide keyboard shortcuts help |
+| `Esc` | Close modals and help |
+| `G` `H` | Go to Home section |
+| `G` `S` | Go to Solar System |
+| `G` `M` | Go to Mission Control |
+| `G` `A` | Go to NASA APOD |
+| `G` `R` | Go to Mars Rover |
+| `G` `G` | Go to Gallery |
+| `G` `F` | Go to Space Facts |
+| `G` `C` | Go to Contact |
+| `G` `3` | Open 3D Explorer |
+| `/` | Focus Space Facts search |
+| `T` | Toggle dark/light theme |
+
+> 💡 Press `?` anytime to see all available shortcuts!
 
 ---
 
