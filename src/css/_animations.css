@@ -303,6 +303,110 @@
   transform: translateY(0);
 }
 
+/* ============================================
+   SOLAR SYSTEM SCROLL FADE-IN ANIMATIONS
+   ============================================ */
+
+/* Base state for solar system elements before animation */
+.solar-system .orbit {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+/* Visible state when scrolled into view */
+.solar-system .orbit.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Sun animation */
+.solar-system .sun {
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.solar-system .sun.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Staggered delays for planets (0.1s between each) */
+.solar-system .sun.visible {
+  transition-delay: 0s;
+}
+
+.solar-system .orbit-mercury.visible {
+  transition-delay: 0.1s;
+}
+
+.solar-system .orbit-venus.visible {
+  transition-delay: 0.2s;
+}
+
+.solar-system .orbit-earth.visible {
+  transition-delay: 0.3s;
+}
+
+.solar-system .orbit-mars.visible {
+  transition-delay: 0.4s;
+}
+
+.solar-system .orbit-jupiter.visible {
+  transition-delay: 0.5s;
+}
+
+.solar-system .orbit-saturn.visible {
+  transition-delay: 0.6s;
+}
+
+.solar-system .orbit-uranus.visible {
+  transition-delay: 0.7s;
+}
+
+.solar-system .orbit-neptune.visible {
+  transition-delay: 0.8s;
+}
+
+/* Section header animation */
+.solar-system .section-header {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.solar-system .section-header.visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0s;
+}
+
+/* Planet info panel animation */
+.solar-system .planet-info-panel {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.solar-system .planet-info-panel.visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.9s;
+}
+
+/* Ensure animations work with both light and dark themes */
+[data-theme="light"] .solar-system .orbit,
+[data-theme="dark"] .solar-system .orbit,
+[data-theme="light"] .solar-system .sun,
+[data-theme="dark"] .solar-system .sun,
+[data-theme="light"] .solar-system .section-header,
+[data-theme="dark"] .solar-system .section-header,
+[data-theme="light"] .solar-system .planet-info-panel,
+[data-theme="dark"] .solar-system .planet-info-panel {
+  /* Inherit the same animation properties regardless of theme */
+}
+
 /* Reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -311,5 +415,14 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .solar-system .orbit,
+  .solar-system .sun,
+  .solar-system .section-header,
+  .solar-system .planet-info-panel {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 }

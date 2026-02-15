@@ -274,7 +274,7 @@ class ScrollAnimations {
     this.elements = document.querySelectorAll(selector);
     this.init();
   }
-  
+
   init() {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -283,8 +283,66 @@ class ScrollAnimations {
         }
       });
     }, { threshold: 0.1 });
-    
+
     this.elements.forEach(el => observer.observe(el));
+  }
+}
+
+/**
+ * Solar System Scroll Animations
+ * Handles fade-in animations for solar system elements
+ */
+class SolarSystemScrollAnimations {
+  constructor() {
+    this.solarSystem = document.querySelector('.solar-system');
+    this.animatedElements = [];
+    this.observer = null;
+
+    if (this.solarSystem) {
+      this.init();
+    }
+  }
+
+  init() {
+    // Collect all elements to animate
+    this.animatedElements = [
+      this.solarSystem.querySelector('.section-header'),
+      this.solarSystem.querySelector('.sun'),
+      ...this.solarSystem.querySelectorAll('.orbit'),
+      this.solarSystem.querySelector('.planet-info-panel')
+    ].filter(el => el !== null); // Filter out any null elements
+
+    // Create Intersection Observer with 20% threshold
+    this.observer = new IntersectionObserver(
+      (entries) => this.handleIntersection(entries),
+      {
+        threshold: 0.2, // Trigger when element is 20% in view
+        rootMargin: '0px 0px -50px 0px' // Slightly early trigger for smoother feel
+      }
+    );
+
+    // Observe each element
+    this.animatedElements.forEach(el => {
+      this.observer.observe(el);
+    });
+  }
+
+  handleIntersection(entries) {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // Add visible class to trigger animation
+        entry.target.classList.add('visible');
+
+        // Unobserve after animation triggers (animate only once)
+        this.observer.unobserve(entry.target);
+      }
+    });
+  }
+
+  destroy() {
+    if (this.observer) {
+      this.observer.disconnect();
+    }
   }
 }
 
@@ -425,10 +483,16 @@ class CosmicVoyage {
       // Animate elements on scroll
       const animatedElements = document.querySelectorAll('.fact-card, .section-header');
       animatedElements.forEach((el, i) => {
-        el.classList.add('animate-on-scroll');
-        el.style.animationDelay = `${i * 100}ms`;
+        // Skip section headers inside solar system (handled separately)
+        if (!el.closest('.solar-system')) {
+          el.classList.add('animate-on-scroll');
+          el.style.animationDelay = `${i * 100}ms`;
+        }
       });
       this.modules.scrollAnimations = new ScrollAnimations('.animate-on-scroll');
+
+      // Initialize solar system scroll animations
+      this.modules.solarSystemScrollAnimations = new SolarSystemScrollAnimations();
 
       // Fun stuff
       this.modules.easterEggs = new EasterEggs();
