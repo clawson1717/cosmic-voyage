@@ -560,49 +560,64 @@
             <h2 class="section-title">Mind-Blowing Space Facts</h2>
             <p class="section-subtitle">Discover the incredible truths about our universe</p>
         </div>
-        
-        <div class="facts-grid">
-            <div class="fact-card" data-aos="fade-up">
+
+        <div class="facts-search-container">
+            <div class="facts-search-wrapper">
+                <span class="facts-search-icon">🔭</span>
+                <input type="text" id="facts-search-input" class="facts-search-input" placeholder="Search facts (e.g., stars, planets, black holes)..." autocomplete="off">
+                <span class="facts-search-clear" id="facts-search-clear">✕</span>
+            </div>
+            <div class="facts-search-results" id="facts-search-results"></div>
+        </div>
+
+        <div class="facts-grid" id="facts-grid">
+            <div class="fact-card" data-aos="fade-up" data-fact-title="1 Million Earths" data-fact-text="You could fit one million Earths inside the Sun. The Sun accounts for 99.86% of all mass in our solar system.">
                 <div class="fact-icon">☀️</div>
                 <h3 class="fact-title">1 Million Earths</h3>
                 <p class="fact-text">You could fit one million Earths inside the Sun. The Sun accounts for 99.86% of all mass in our solar system.</p>
                 <div class="fact-glow"></div>
             </div>
-            
-            <div class="fact-card" data-aos="fade-up" data-aos-delay="100">
+
+            <div class="fact-card" data-aos="fade-up" data-aos-delay="100" data-fact-title="Infinite Stars" data-fact-text="There are more stars in the universe than grains of sand on all of Earth's beaches combined.">
                 <div class="fact-icon">🌌</div>
                 <h3 class="fact-title">Infinite Stars</h3>
                 <p class="fact-text">There are more stars in the universe than grains of sand on all of Earth's beaches combined.</p>
                 <div class="fact-glow"></div>
             </div>
-            
-            <div class="fact-card" data-aos="fade-up" data-aos-delay="200">
+
+            <div class="fact-card" data-aos="fade-up" data-aos-delay="200" data-fact-title="Black Hole Giants" data-fact-text="The largest known black hole, TON 618, has a mass of 66 billion suns and is 40 billion km across.">
                 <div class="fact-icon">🕳️</div>
                 <h3 class="fact-title">Black Hole Giants</h3>
                 <p class="fact-text">The largest known black hole, TON 618, has a mass of 66 billion suns and is 40 billion km across.</p>
                 <div class="fact-glow"></div>
             </div>
-            
-            <div class="fact-card" data-aos="fade-up" data-aos-delay="300">
+
+            <div class="fact-card" data-aos="fade-up" data-aos-delay="300" data-fact-title="Moon Drift" data-fact-text="The Moon is drifting away from Earth at a rate of 3.8 cm per year—about the same speed your fingernails grow.">
                 <div class="fact-icon">🌙</div>
                 <h3 class="fact-title">Moon Drift</h3>
                 <p class="fact-text">The Moon is drifting away from Earth at a rate of 3.8 cm per year—about the same speed your fingernails grow.</p>
                 <div class="fact-glow"></div>
             </div>
-            
-            <div class="fact-card" data-aos="fade-up" data-aos-delay="400">
+
+            <div class="fact-card" data-aos="fade-up" data-aos-delay="400" data-fact-title="Neutron Stars" data-fact-text="A sugar-cube-sized amount of neutron star material would weigh about 1 billion tons on Earth.">
                 <div class="fact-icon">⚡</div>
                 <h3 class="fact-title">Neutron Stars</h3>
                 <p class="fact-text">A sugar-cube-sized amount of neutron star material would weigh about 1 billion tons on Earth.</p>
                 <div class="fact-glow"></div>
             </div>
-            
-            <div class="fact-card" data-aos="fade-up" data-aos-delay="500">
+
+            <div class="fact-card" data-aos="fade-up" data-aos-delay="500" data-fact-title="Cosmic Light" data-fact-text="The light we see from stars today left those stars thousands or even millions of years ago.">
                 <div class="fact-icon">👁️</div>
                 <h3 class="fact-title">Cosmic Light</h3>
                 <p class="fact-text">The light we see from stars today left those stars thousands or even millions of years ago.</p>
                 <div class="fact-glow"></div>
             </div>
+        </div>
+
+        <div class="facts-no-results" id="facts-no-results">
+            <div class="no-results-icon">🔭</div>
+            <h3 class="no-results-title">No facts found</h3>
+            <p class="no-results-text">Try searching for different terms like "stars", "planets", or "black holes"</p>
         </div>
     </section>
 

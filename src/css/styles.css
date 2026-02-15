@@ -204,6 +204,156 @@
     50% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.6); }
 }
 
+/* ============================================
+   SPACE FACTS SEARCH - Custom Feature
+   ============================================ */
+
+.facts-search-container {
+    max-width: 600px;
+    margin: 0 auto var(--space-10);
+    padding: 0 var(--container-padding);
+    position: relative;
+    z-index: var(--z-base);
+}
+
+.facts-search-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    border-radius: var(--radius-full);
+    padding: var(--space-1);
+    transition: var(--transition-base);
+    box-shadow: 0 4px 20px rgba(0, 212, 255, 0.1);
+}
+
+.facts-search-wrapper:hover {
+    border-color: rgba(0, 212, 255, 0.5);
+    box-shadow: 0 4px 30px rgba(0, 212, 255, 0.2);
+}
+
+.facts-search-wrapper:focus-within {
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.3), inset 0 0 20px rgba(0, 212, 255, 0.05);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.facts-search-icon {
+    font-size: var(--text-xl);
+    margin-left: var(--space-4);
+    margin-right: var(--space-2);
+    opacity: 0.7;
+    pointer-events: none;
+    filter: drop-shadow(0 0 5px rgba(0, 212, 255, 0.5));
+}
+
+.facts-search-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: var(--space-3) var(--space-2);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    outline: none;
+}
+
+.facts-search-input::placeholder {
+    color: var(--text-muted);
+}
+
+.facts-search-clear {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: var(--space-2);
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transition: var(--transition-fast);
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+}
+
+.facts-search-clear:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--accent-cyan);
+    transform: scale(1.1);
+}
+
+.facts-search-results {
+    text-align: center;
+    margin-top: var(--space-3);
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    min-height: 1.5rem;
+    transition: var(--transition-fast);
+}
+
+.facts-search-results.has-results {
+    color: var(--accent-cyan);
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+}
+
+/* No Results Message */
+.facts-no-results {
+    display: none;
+    text-align: center;
+    padding: var(--space-12) var(--space-6);
+    max-width: 500px;
+    margin: 0 auto;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.facts-no-results.visible {
+    display: block;
+}
+
+.no-results-icon {
+    font-size: 4rem;
+    margin-bottom: var(--space-4);
+    opacity: 0.5;
+    animation: float 3s ease-in-out infinite;
+}
+
+.no-results-title {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    color: var(--text-primary);
+    margin-bottom: var(--space-2);
+}
+
+.no-results-text {
+    color: var(--text-secondary);
+    font-size: var(--text-base);
+}
+
+/* Keyword Highlighting */
+.fact-highlight {
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.3), rgba(157, 78, 221, 0.3));
+    color: var(--star-white);
+    padding: 0 4px;
+    border-radius: var(--radius-sm);
+    font-weight: var(--font-semibold);
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+}
+
+/* Hidden fact cards (for animation) */
+.fact-card.fact-hidden {
+    opacity: 0;
+    transform: scale(0.9);
+    pointer-events: none;
+}
+
+.fact-card {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
     .promo-container {
@@ -233,5 +383,23 @@
     .nav-link-featured {
         margin-left: 0;
         margin-top: 0.5rem;
+    }
+
+    .facts-search-container {
+        padding: 0 var(--space-4);
+    }
+
+    .facts-search-wrapper {
+        padding: var(--space-1);
+    }
+
+    .facts-search-input {
+        font-size: var(--text-sm);
+        padding: var(--space-2) var(--space-2);
+    }
+
+    .facts-search-icon {
+        margin-left: var(--space-3);
+        font-size: var(--text-lg);
     }
 }

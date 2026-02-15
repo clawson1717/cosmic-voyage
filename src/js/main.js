@@ -16,6 +16,7 @@ import '../css/styles.css';
 
 import { Starfield } from './modules/Starfield.js';
 import { DarkMode } from './modules/DarkMode.js';
+import { FactsSearch } from './modules/FactsSearch.js';
 
 /**
  * Mobile Menu Handler
@@ -355,6 +356,7 @@ class CosmicVoyage {
       // Interactive features
       this.modules.planetInteraction = new PlanetInteraction('.planet-body', '#planet-info');
       this.modules.newsletterForm = new NewsletterForm('#subscribe-form');
+      this.modules.factsSearch = new FactsSearch();
 
       // Utilities
       this.modules.smoothScroll = new SmoothScroll('a[href^="#"]');
