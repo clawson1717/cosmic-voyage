@@ -1,0 +1,530 @@
+/** ============================================
+   COSMIC VOYAGE - Space Quote Generator Styles
+   ============================================ */
+
+/* Quote Section Wrapper */
+.quote-section {
+  padding: var(--space-16) var(--space-4);
+  position: relative;
+  z-index: 1;
+}
+
+.quote-container-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.quote-section-header {
+  text-align: center;
+  margin-bottom: var(--space-8);
+}
+
+.quote-section-icon {
+  display: inline-block;
+  font-size: var(--text-3xl);
+  margin-bottom: var(--space-3);
+  animation: quoteIconPulse 2s ease-in-out infinite;
+}
+
+@keyframes quoteIconPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+.quote-section-title {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: var(--font-bold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-2);
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.quote-section-subtitle {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+/* Quote Generator Container */
+.quote-generator {
+  position: relative;
+  background: var(--color-surface-primary);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8) var(--space-6);
+  overflow: hidden;
+  transition: all var(--transition-base);
+  backdrop-filter: var(--blur-md);
+}
+
+.quote-generator:hover {
+  border-color: var(--color-border-hover);
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-2px);
+}
+
+/* Floating Stars Animation */
+.quote-stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.quote-star {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--color-star-white);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--color-accent-cyan), 0 0 20px var(--color-accent-purple);
+  opacity: 0;
+}
+
+.quote-star-1 {
+  top: 15%;
+  left: 10%;
+  animation: quoteStarFloat 4s ease-in-out infinite;
+  animation-delay: 0s;
+}
+
+.quote-star-2 {
+  top: 70%;
+  right: 15%;
+  animation: quoteStarFloat 5s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+.quote-star-3 {
+  top: 25%;
+  right: 20%;
+  animation: quoteStarFloat 3.5s ease-in-out infinite;
+  animation-delay: 0.5s;
+}
+
+.quote-star-4 {
+  bottom: 30%;
+  left: 8%;
+  animation: quoteStarFloat 4.5s ease-in-out infinite;
+  animation-delay: 1.5s;
+}
+
+.quote-star-5 {
+  top: 50%;
+  left: 5%;
+  animation: quoteStarFloat 3s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+@keyframes quoteStarFloat {
+  0%, 100% {
+    opacity: 0;
+    transform: translateY(0) scale(0.5);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateY(-20px) scale(1);
+  }
+}
+
+/* Quote Content */
+.quote-content {
+  position: relative;
+  text-align: center;
+  margin-bottom: var(--space-6);
+}
+
+.quote-mark {
+  font-family: Georgia, serif;
+  font-size: var(--text-4xl);
+  color: var(--color-accent-cyan);
+  opacity: 0.5;
+  line-height: 1;
+  position: absolute;
+}
+
+.quote-mark-open {
+  top: -20px;
+  left: 0;
+}
+
+.quote-mark-close {
+  bottom: -40px;
+  right: 0;
+}
+
+.quote-text {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--font-medium);
+  color: var(--color-text-primary);
+  line-height: var(--leading-relaxed);
+  margin: 0 var(--space-8);
+  position: relative;
+  z-index: 1;
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Attribution */
+.quote-attribution {
+  text-align: center;
+  margin-bottom: var(--space-6);
+}
+
+.quote-author {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  color: var(--color-accent-cyan);
+  margin-bottom: var(--space-1);
+}
+
+.quote-source {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+/* Controls */
+.quote-controls {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.quote-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  background: var(--color-surface-secondary);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-full);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  backdrop-filter: var(--blur-sm);
+}
+
+.quote-btn:hover {
+  background: var(--color-surface-elevated);
+  border-color: var(--color-accent-cyan);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow);
+}
+
+.quote-btn:active {
+  transform: translateY(0);
+}
+
+.quote-btn-new {
+  background: linear-gradient(
+    135deg,
+    var(--color-accent-cyan) 0%,
+    var(--color-accent-purple) 100%
+  );
+  border: none;
+  color: var(--color-space-900);
+  font-weight: var(--font-bold);
+}
+
+.quote-btn-new:hover {
+  filter: brightness(1.1);
+  box-shadow: var(--shadow-glow-lg);
+}
+
+.quote-btn-icon {
+  font-size: var(--text-base);
+}
+
+/* Progress Bar */
+.quote-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--color-surface-secondary);
+  overflow: hidden;
+}
+
+.quote-progress-bar {
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    var(--color-accent-cyan),
+    var(--color-accent-purple)
+  );
+  width: 0%;
+}
+
+@keyframes quoteProgress {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+/* Fade Animations */
+.quote-fading-out {
+  animation: quoteFadeOut 0.3s ease-out forwards;
+}
+
+.quote-fading-in {
+  animation: quoteFadeIn 0.5s ease-out forwards;
+}
+
+@keyframes quoteFadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes quoteFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Toast Notification */
+.quote-toast {
+  position: absolute;
+  bottom: calc(100% + var(--space-4));
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  background: var(--color-accent-green);
+  color: var(--color-text-inverse);
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-lg);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  white-space: nowrap;
+  opacity: 0;
+  transition: all var(--transition-base);
+  z-index: var(--z-tooltip);
+  box-shadow: var(--shadow-lg);
+}
+
+.quote-toast::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 8px solid transparent;
+  border-top-color: var(--color-accent-green);
+}
+
+.quote-toast-visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.quote-toast-hiding {
+  opacity: 0;
+  transform: translateX(-50%) translateY(-10px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .quote-section {
+    padding: var(--space-10) var(--space-4);
+  }
+
+  .quote-section-title {
+    font-size: var(--text-xl);
+  }
+
+  .quote-section-subtitle {
+    font-size: var(--text-sm);
+  }
+  .quote-generator {
+    padding: var(--space-6) var(--space-4);
+    margin: 0 var(--space-2);
+  }
+  
+  .quote-text {
+    font-size: var(--text-lg);
+    margin: 0 var(--space-4);
+    min-height: 60px;
+  }
+  
+  .quote-mark {
+    font-size: var(--text-3xl);
+  }
+  
+  .quote-mark-open {
+    top: -10px;
+  }
+  
+  .quote-mark-close {
+    bottom: -30px;
+  }
+  
+  .quote-author {
+    font-size: var(--text-base);
+  }
+  
+  .quote-source {
+    font-size: var(--text-xs);
+  }
+  
+  .quote-controls {
+    gap: var(--space-2);
+  }
+  
+  .quote-btn {
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-xs);
+  }
+  
+  .quote-btn-text {
+    display: none;
+  }
+  
+  .quote-btn-icon {
+    font-size: var(--text-lg);
+  }
+}
+
+@media (max-width: 480px) {
+  .quote-text {
+    font-size: var(--text-base);
+    margin: 0 var(--space-2);
+  }
+  
+  .quote-mark-open {
+    left: -5px;
+  }
+  
+  .quote-mark-close {
+    right: -5px;
+  }
+}
+
+/* Light Theme Adaptations */
+[data-theme="light"] .quote-section-title {
+  background: linear-gradient(90deg, #007bff, #6f42c1, #ff6b35);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+[data-theme="light"] .quote-generator {
+  background: var(--color-surface-primary);
+  border-color: var(--color-border-subtle);
+}
+
+[data-theme="light"] .quote-generator:hover {
+  border-color: var(--color-accent-blue);
+  box-shadow: 0 0 20px rgba(0, 123, 255, 0.2);
+}
+
+[data-theme="light"] .quote-text {
+  color: var(--color-text-primary);
+}
+
+[data-theme="light"] .quote-author {
+  color: var(--color-accent-blue);
+}
+
+[data-theme="light"] .quote-btn {
+  background: var(--color-surface-secondary);
+  border-color: var(--color-border-subtle);
+}
+
+[data-theme="light"] .quote-btn:hover {
+  border-color: var(--color-accent-blue);
+  box-shadow: 0 0 15px rgba(0, 123, 255, 0.2);
+}
+
+[data-theme="light"] .quote-btn-new {
+  background: linear-gradient(
+    135deg,
+    #007bff 0%,
+    #6f42c1 100%
+  );
+  color: white;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .quote-generator,
+  .quote-btn,
+  .quote-text,
+  .quote-star {
+    transition: none !important;
+    animation: none !important;
+  }
+  
+  .quote-fading-out,
+  .quote-fading-in {
+    animation: none !important;
+  }
+  
+  .quote-progress-bar {
+    animation: none !important;
+  }
+}
+
+/* Focus Styles for Accessibility */
+.quote-btn:focus-visible {
+  outline: 2px solid var(--color-accent-cyan);
+  outline-offset: 2px;
+}
+
+[data-theme="light"] .quote-btn:focus-visible {
+  outline-color: var(--color-accent-blue);
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .quote-generator {
+    border-width: 2px;
+  }
+  
+  .quote-mark {
+    opacity: 0.8;
+  }
+  
+  .quote-btn {
+    border-width: 2px;
+  }
+}
