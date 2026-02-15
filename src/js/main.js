@@ -197,12 +197,43 @@ class PlanetInteraction {
 }
 
 /**
- * Newsletter Form Handler
+ * Contact Form Handler with Validation
  */
-class NewsletterForm {
+class ContactForm {
   constructor(formSelector) {
     this.form = document.querySelector(formSelector);
-    this.messageEl = document.getElementById('form-message');
+    this.successMessage = document.getElementById('success-message');
+    this.resetBtn = document.getElementById('reset-form-btn');
+    this.fields = {
+      name: {
+        input: document.getElementById('contact-name'),
+        error: document.getElementById('name-error'),
+        validate: (value) => {
+          if (!value.trim()) return 'Name is required';
+          if (value.trim().length < 2) return 'Name must be at least 2 characters';
+          return null;
+        }
+      },
+      email: {
+        input: document.getElementById('contact-email'),
+        error: document.getElementById('email-error'),
+        validate: (value) => {
+          if (!value.trim()) return 'Email is required';
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(value)) return 'Please enter a valid email address';
+          return null;
+        }
+      },
+      message: {
+        input: document.getElementById('contact-message'),
+        error: document.getElementById('message-error'),
+        validate: (value) => {
+          if (!value.trim()) return 'Message is required';
+          if (value.trim().length < 10) return 'Message must be at least 10 characters';
+          return null;
+        }
+      }
+    };
     
     if (this.form) {
       this.init();
@@ -210,34 +241,149 @@ class NewsletterForm {
   }
   
   init() {
-    this.form.addEventListener('submit', (e) => this.handleSubmit(e));
-  }
-  
-  handleSubmit(e) {
-    e.preventDefault();
-    const email = this.form.querySelector('input[type="email"]').value;
+    // Real-time validation on blur
+    Object.keys(this.fields).forEach(fieldName => {
+      const field = this.fields[fieldName];
+      field.input.addEventListener('blur', () => this.validateField(fieldName));
+      field.input.addEventListener('input', () => this.clearError(fieldName));
+    });
     
-    if (this.validateEmail(email)) {
-      this.showMessage('🚀 Welcome aboard! You\'re now subscribed to cosmic updates.', 'success');
-      this.form.reset();
+    // Form submission
+    this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+    
+    // Reset button
+    if (this.resetBtn) {
+      this.resetBtn.addEventListener('click', () => this.resetForm());
+    }
+    
+    // Add spinner to submit button
+    const submitBtn = this.form.querySelector('.btn-submit');
+    if (submitBtn) {
+      const spinner = document.createElement('div');
+      spinner.className = 'btn-spinner';
+      spinner.innerHTML = '<div class="spinner"></div>';
+      submitBtn.appendChild(spinner);
+    }
+  }
+  
+  validateField(fieldName) {
+    const field = this.fields[fieldName];
+    const value = field.input.value;
+    const error = field.validate(value);
+    
+    if (error) {
+      this.showError(fieldName, error);
+      return false;
     } else {
-      this.showMessage('⚠️ Please enter a valid email address.', 'error');
+      this.showSuccess(fieldName);
+      return true;
     }
   }
   
-  validateEmail(email) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  showError(fieldName, message) {
+    const field = this.fields[fieldName];
+    field.input.classList.remove('success');
+    field.input.classList.add('error');
+    field.error.textContent = message;
+    field.error.classList.add('visible');
   }
   
-  showMessage(text, type) {
-    if (this.messageEl) {
-      this.messageEl.textContent = text;
-      this.messageEl.className = `form-message ${type}`;
-      setTimeout(() => {
-        this.messageEl.textContent = '';
-        this.messageEl.className = 'form-message';
-      }, 5000);
+  showSuccess(fieldName) {
+    const field = this.fields[fieldName];
+    field.input.classList.remove('error');
+    field.input.classList.add('success');
+    field.error.textContent = '';
+    field.error.classList.remove('visible');
+  }
+  
+  clearError(fieldName) {
+    const field = this.fields[fieldName];
+    field.input.classList.remove('error');
+    field.error.textContent = '';
+    field.error.classList.remove('visible');
+  }
+  
+  clearAllErrors() {
+    Object.keys(this.fields).forEach(fieldName => {
+      this.clearError(fieldName);
+      this.fields[fieldName].input.classList.remove('success');
+    });
+  }
+  
+  validateAll() {
+    let isValid = true;
+    Object.keys(this.fields).forEach(fieldName => {
+      if (!this.validateField(fieldName)) {
+        isValid = false;
+      }
+    });
+    return isValid;
+  }
+  
+  async handleSubmit(e) {
+    e.preventDefault();
+    
+    // Clear previous states
+    this.clearAllErrors();
+    
+    // Validate all fields
+    if (!this.validateAll()) {
+      // Focus first invalid field
+      const firstInvalid = Object.keys(this.fields).find(fieldName => {
+        return this.fields[fieldName].input.classList.contains('error');
+      });
+      if (firstInvalid) {
+        this.fields[firstInvalid].input.focus();
+      }
+      return;
     }
+    
+    // Show loading state
+    const submitBtn = this.form.querySelector('.btn-submit');
+    submitBtn.classList.add('loading');
+    submitBtn.disabled = true;
+    
+    // Simulate form submission (replace with actual API call)
+    await this.simulateSubmission();
+    
+    // Show success message
+    this.showSuccessMessage();
+    
+    // Reset button state
+    submitBtn.classList.remove('loading');
+    submitBtn.disabled = false;
+  }
+  
+  simulateSubmission() {
+    return new Promise(resolve => setTimeout(resolve, 1500));
+  }
+  
+  showSuccessMessage() {
+    // Fade out form
+    this.form.classList.add('fading-out');
+    
+    setTimeout(() => {
+      this.form.classList.add('hidden');
+      this.form.classList.remove('fading-out');
+      
+      // Show success message
+      this.successMessage.classList.add('visible');
+    }, 300);
+  }
+  
+  resetForm() {
+    // Reset form fields
+    this.form.reset();
+    this.clearAllErrors();
+    
+    // Hide success message
+    this.successMessage.classList.remove('visible');
+    
+    // Show form
+    this.form.classList.remove('hidden');
+    
+    // Focus first field
+    this.fields.name.input.focus();
   }
 }
 
@@ -474,7 +620,7 @@ class CosmicVoyage {
 
       // Interactive features
       this.modules.planetInteraction = new PlanetInteraction('.planet-body', '#planet-info');
-      this.modules.newsletterForm = new NewsletterForm('#subscribe-form');
+      this.modules.contactForm = new ContactForm('#contact-form');
       this.modules.factsSearch = new FactsSearch();
 
       // Utilities
