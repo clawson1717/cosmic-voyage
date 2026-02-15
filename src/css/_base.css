@@ -31,6 +31,16 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color var(--transition-slow), color var(--transition-slow);
+}
+
+/* Smooth theme transitions for all elements that use CSS variables */
+*,
+*::before,
+*::after {
+  transition: background-color var(--transition-base), 
+              border-color var(--transition-base), 
+              box-shadow var(--transition-base);
 }
 
 /* Remove default list styles */

@@ -12,6 +12,87 @@
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/solar-system-3d.css">
     
+    <!-- Theme Toggle Styles -->
+    <style>
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin-left: 1rem;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #00d4ff;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        .theme-icon {
+            position: absolute;
+            font-size: 1.25rem;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .theme-icon.moon {
+            opacity: 1;
+            transform: rotate(0deg) scale(1);
+        }
+
+        .theme-icon.sun {
+            opacity: 0;
+            transform: rotate(90deg) scale(0.5);
+        }
+
+        [data-theme="light"] .theme-icon.moon {
+            opacity: 0;
+            transform: rotate(-90deg) scale(0.5);
+        }
+
+        [data-theme="light"] .theme-icon.sun {
+            opacity: 1;
+            transform: rotate(0deg) scale(1);
+        }
+
+        @media (max-width: 768px) {
+            .theme-toggle {
+                margin-left: auto;
+                margin-right: 1rem;
+            }
+        }
+        
+        /* Light theme adjustments for 3D page */
+        [data-theme="light"] body {
+            background: linear-gradient(180deg, #f0f0f5 0%, #e0e0ea 50%, #f0f0f5 100%);
+        }
+        
+        [data-theme="light"] .page-header p {
+            color: #495057;
+        }
+        
+        [data-theme="light"] .planet-reference {
+            background: rgba(0, 0, 0, 0.03);
+            border-color: rgba(0, 0, 0, 0.1);
+        }
+        
+        [data-theme="light"] .tip-card p {
+            color: #6c757d;
+        }
+        
+        [data-theme="light"] .planet-card {
+            background: rgba(0, 0, 0, 0.05);
+        }
+    </style>
+    
     <style>
         /* Page-specific styles */
         body {
@@ -197,6 +278,10 @@
                 <li><a href="solar-system-3d.html" class="nav-link">Solar System 3D</a></li>
                 <li><a href="index.html#facts" class="nav-link">Space Facts</a></li>
             </ul>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+                <span class="theme-icon moon">🌙</span>
+                <span class="theme-icon sun">☀️</span>
+            </button>
         </div>
     </nav>
 
@@ -302,8 +387,62 @@
     <script src="js/solar-system-3d.js"></script>
     
     <script>
+        // Dark Mode Module
+        class DarkMode {
+            constructor(toggleSelector = '#theme-toggle') {
+                this.toggle = document.querySelector(toggleSelector);
+                this.html = document.documentElement;
+                this.STORAGE_KEY = 'cosmic-voyage-theme';
+                this.currentTheme = this.getStoredTheme() || 'dark';
+                this.init();
+            }
+            
+            init() {
+                this.applyTheme(this.currentTheme);
+                if (this.toggle) {
+                    this.toggle.addEventListener('click', () => this.toggleTheme());
+                }
+            }
+            
+            getStoredTheme() {
+                try {
+                    return localStorage.getItem(this.STORAGE_KEY);
+                } catch (e) {
+                    return null;
+                }
+            }
+            
+            setStoredTheme(theme) {
+                try {
+                    localStorage.setItem(this.STORAGE_KEY, theme);
+                } catch (e) {}
+            }
+            
+            applyTheme(theme) {
+                this.currentTheme = theme;
+                if (theme === 'light') {
+                    this.html.setAttribute('data-theme', 'light');
+                } else {
+                    this.html.removeAttribute('data-theme');
+                }
+                if (this.toggle) {
+                    const label = theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode';
+                    this.toggle.setAttribute('aria-label', label);
+                }
+            }
+            
+            toggleTheme() {
+                const newTheme = this.currentTheme === 'dark' ? 'light' : 'dark';
+                this.applyTheme(newTheme);
+                this.setStoredTheme(newTheme);
+            }
+        }
+
         // Initialize the 3D Solar System when page loads
         document.addEventListener('DOMContentLoaded', () => {
+            // Initialize dark mode
+            new DarkMode('#theme-toggle');
+            
             const solarSystem = new SolarSystem3D('solar-system-3d', {
                 cameraDistance: 280,
                 orbitSpeed: 0.5,

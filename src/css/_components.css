@@ -236,15 +236,20 @@
   left: 0;
   right: 0;
   z-index: var(--z-fixed);
-  background: rgba(5, 5, 8, 0.8);
+  background: var(--color-surface-primary);
   backdrop-filter: var(--blur-xl);
   border-bottom: 1px solid var(--color-border-subtle);
   transition: var(--transition-base);
 }
 
 .navbar.scrolled {
-  background: rgba(5, 5, 8, 0.95);
+  background: var(--color-surface-secondary);
   box-shadow: 0 4px 30px rgba(0, 212, 255, 0.1);
+}
+
+/* Light theme navbar adjustments */
+[data-theme="light"] .navbar.scrolled {
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
 
 .navbar-container {
@@ -431,6 +436,71 @@
 .section-subtitle {
   color: var(--color-text-secondary);
   font-size: var(--text-lg);
+}
+
+/* ============================================
+   THEME TOGGLE
+   ============================================ */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  background: var(--color-surface-primary);
+  border: 1px solid var(--color-border-subtle);
+  cursor: pointer;
+  transition: var(--transition-base);
+  position: relative;
+  overflow: hidden;
+  margin-left: var(--space-4);
+}
+
+.theme-toggle:hover {
+  background: var(--color-surface-secondary);
+  border-color: var(--color-accent-cyan);
+  box-shadow: var(--shadow-glow);
+  transform: scale(1.05);
+}
+
+.theme-toggle:active {
+  transform: scale(0.95);
+}
+
+.theme-icon {
+  position: absolute;
+  font-size: 1.25rem;
+  transition: var(--transition-slow);
+}
+
+.theme-icon.moon {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+.theme-icon.sun {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.5);
+}
+
+/* Light mode - show sun icon */
+[data-theme="light"] .theme-icon.moon {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.5);
+}
+
+[data-theme="light"] .theme-icon.sun {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+/* Mobile theme toggle positioning */
+@media (max-width: 768px) {
+  .theme-toggle {
+    margin-left: auto;
+    margin-right: var(--space-4);
+  }
 }
 
 /* ============================================

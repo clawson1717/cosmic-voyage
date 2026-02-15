@@ -15,6 +15,7 @@ import '../css/main.css';
 import '../css/styles.css';
 
 import { Starfield } from './modules/Starfield.js';
+import { DarkMode } from './modules/DarkMode.js';
 
 /**
  * Mobile Menu Handler
@@ -342,6 +343,9 @@ class CosmicVoyage {
    */
   bootstrap() {
     try {
+      // Initialize dark mode first (before any visual effects)
+      this.modules.darkMode = new DarkMode('#theme-toggle');
+      
       // Core visual effects
       this.modules.starfield = new Starfield('#starfield');
 
