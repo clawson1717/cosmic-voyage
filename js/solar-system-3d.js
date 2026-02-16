@@ -781,6 +781,10 @@ class SolarSystem3D {
             <button class="control-btn" id="zoom-sun" title="Focus on Sun">
                 <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
             </button>
+            <button class="control-btn" id="toggle-fullscreen" title="Toggle Fullscreen (F)">
+                <svg class="fullscreen-icon-enter" viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+                <svg class="fullscreen-icon-exit" viewBox="0 0 24 24" style="display: none;"><path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/></svg>
+            </button>
         `;
         this.container.appendChild(controls);
         this.controlsPanel = controls;
@@ -838,7 +842,11 @@ class SolarSystem3D {
                     </div>
                     <div class="control-group">
                         <span class="key">Esc</span>
-                        <span class="desc">Close info panel</span>
+                        <span class="desc">Close info panel / Exit fullscreen</span>
+                    </div>
+                    <div class="control-group">
+                        <span class="key">F</span>
+                        <span class="desc">Toggle fullscreen mode</span>
                     </div>
                 </div>
                 <div class="help-hint">
@@ -870,6 +878,52 @@ class SolarSystem3D {
         if (this.helpPanel) {
             this.helpPanel.classList.toggle('active');
         }
+    }
+
+    toggleFullscreen() {
+        const isFullscreen = document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
+        
+        if (!isFullscreen) {
+            // Enter fullscreen
+            if (this.container.requestFullscreen) {
+                this.container.requestFullscreen();
+            } else if (this.container.webkitRequestFullscreen) {
+                this.container.webkitRequestFullscreen();
+            } else if (this.container.msRequestFullscreen) {
+                this.container.msRequestFullscreen();
+            }
+        } else {
+            // Exit fullscreen
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+        }
+    }
+
+    updateFullscreenButton() {
+        const isFullscreen = document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
+        const enterIcon = this.controlsPanel.querySelector('.fullscreen-icon-enter');
+        const exitIcon = this.controlsPanel.querySelector('.fullscreen-icon-exit');
+        const fullscreenBtn = this.controlsPanel.querySelector('#toggle-fullscreen');
+        
+        if (isFullscreen) {
+            this.container.classList.add('fullscreen');
+            if (enterIcon) enterIcon.style.display = 'none';
+            if (exitIcon) exitIcon.style.display = 'block';
+            if (fullscreenBtn) fullscreenBtn.title = 'Exit Fullscreen (F)';
+        } else {
+            this.container.classList.remove('fullscreen');
+            if (enterIcon) enterIcon.style.display = 'block';
+            if (exitIcon) exitIcon.style.display = 'none';
+            if (fullscreenBtn) fullscreenBtn.title = 'Toggle Fullscreen (F)';
+        }
+        
+        // Trigger resize to update renderer
+        setTimeout(() => this.onWindowResize(), 100);
     }
 
     addEventListeners() {
@@ -917,6 +971,17 @@ class SolarSystem3D {
 
         this.controlsPanel.querySelector('#zoom-sun').addEventListener('click', () => {
             this.focusOnObject(this.sun);
+        });
+
+        // Fullscreen toggle button
+        this.controlsPanel.querySelector('#toggle-fullscreen').addEventListener('click', () => {
+            this.toggleFullscreen();
+        });
+
+        // Fullscreen change event listener
+        const fullscreenEvents = ['fullscreenchange', 'webkitfullscreenchange', 'msfullscreenchange'];
+        fullscreenEvents.forEach(event => {
+            document.addEventListener(event, () => this.updateFullscreenButton(), false);
         });
 
         // Keyboard controls
@@ -978,6 +1043,10 @@ class SolarSystem3D {
             case 'H':
             case '?':
                 this.toggleHelpPanel();
+                break;
+            case 'f':
+            case 'F':
+                this.toggleFullscreen();
                 break;
         }
     }

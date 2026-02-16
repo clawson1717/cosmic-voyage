@@ -361,36 +361,50 @@
     right: 0;
     bottom: 0;
     z-index: 9999;
-    height: 100vh;
+    height: 100vh !important;
+    min-height: 100vh !important;
     border-radius: 0;
+    max-width: none;
 }
 
-.fullscreen-toggle {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 40px;
-    height: 40px;
-    background: rgba(10, 10, 20, 0.9);
-    border: 1px solid rgba(0, 212, 255, 0.3);
-    border-radius: 8px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.solar-system-3d-container.fullscreen .solar-controls {
+    bottom: 30px;
+    left: 30px;
+}
+
+.solar-system-3d-container.fullscreen .solar-instructions {
+    top: 30px;
+    left: 30px;
+}
+
+.solar-system-3d-container.fullscreen .planet-info-overlay {
+    top: 30px;
+    right: 30px;
+}
+
+/* Fullscreen button icon states */
+.control-btn .fullscreen-icon-enter,
+.control-btn .fullscreen-icon-exit {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: #00d4ff;
+    stroke-width: 2;
     transition: all 0.3s ease;
-    z-index: 50;
 }
 
-.fullscreen-toggle:hover {
-    background: rgba(0, 212, 255, 0.2);
-    border-color: #00d4ff;
+.control-btn:hover .fullscreen-icon-enter,
+.control-btn:hover .fullscreen-icon-exit {
+    stroke: #fff;
 }
 
-.fullscreen-toggle svg {
-    width: 20px;
-    height: 20px;
-    fill: #00d4ff;
+/* Hide fullscreen button on mobile (optional - can be adjusted as needed) */
+@media (max-width: 480px) {
+    .control-btn svg.fullscreen-icon-enter,
+    .control-btn svg.fullscreen-icon-exit {
+        width: 20px;
+        height: 20px;
+    }
 }
 
 /* Planet Info Modal */
