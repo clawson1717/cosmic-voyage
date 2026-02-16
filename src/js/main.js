@@ -17,7 +17,7 @@ import '../css/apod-skeleton.css';
 import '../css/keyboard-shortcuts.css';
 import '../css/quote-generator.css';
 
-import { Starfield } from './modules/Starfield.js';
+import { Junglefield } from './modules/Junglefield.js';
 import { DarkMode } from './modules/DarkMode.js';
 import { FactsSearch } from './modules/FactsSearch.js';
 import { KeyboardShortcuts } from './modules/KeyboardShortcuts.js';
@@ -617,7 +617,7 @@ class CosmicVoyage {
       this.modules.darkMode = new DarkMode('#theme-toggle');
       
       // Core visual effects
-      this.modules.starfield = new Starfield('#starfield');
+      this.modules.starfield = new Junglefield('#starfield');
 
       // Navigation
       this.modules.mobileMenu = new MobileMenu('.hamburger', '.nav-menu');

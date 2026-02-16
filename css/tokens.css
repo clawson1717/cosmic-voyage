@@ -1,85 +1,84 @@
 /**
  * Cosmic Voyage - Design System Tokens
- * Comprehensive design tokens for the space theme
+ * Yucatan Jungle Theme - Ferns, Ruins, Cenotes
  */
 
  :root {
     /* ============================================
-       CORE COLOR PALETTE - Deep Space Theme
+       CORE COLOR PALETTE - Yucatan Jungle Theme
        ============================================ */
     
-    /* Primary Space Colors */
-    --void-black: #020204;
-    --deep-space: #050508;
-    --cosmic-black: #0a0a0f;
-    --nebula-dark: #0d0d14;
+    /* Primary Jungle Colors */
+    --void-black: #0a1f0a;
+    --deep-space: #0d2810;
+    --cosmic-black: #0f3d0f;
+    --nebula-dark: #1a2e1a;
     
-    /* Nebula Colors - Ethereal Purples & Blues */
-    --nebula-purple: #1a0b2e;
-    --nebula-purple-light: #2d1b4e;
-    --nebula-purple-bright: #4a2b7a;
-    --nebula-blue: #0d1b2a;
-    --nebula-blue-light: #1b3a4b;
-    --nebula-cyan: #16213e;
-    --nebula-pink: #2d1b4e;
-    --nebula-rose: #3d1f3d;
+    /* Jungle Greens - Lush Foliage */
+    --nebula-purple: #1a3d1a;
+    --nebula-purple-light: #2d5a2d;
+    --nebula-purple-bright: #3d7a3d;
+    --nebula-blue: #1a3d3d;
+    --nebula-blue-light: #2d5a5a;
+    --nebula-cyan: #1a2e2e;
+    --nebula-pink: #2d3d2d;
+    --nebula-rose: #3d2d3d;
     
-    /* Star Colors */
-    --star-white: #ffffff;
-    --star-bright: #f8f9fa;
-    --star-gold: #ffd700;
-    --star-amber: #ffb347;
-    --star-blue: #87ceeb;
-    --star-cyan: #a8d8ea;
+    /* Cenote Water Colors */
+    --star-white: #e0f7fa;
+    --star-bright: #b2ebf2;
+    --star-gold: #ffd54f;
+    --star-amber: #ffb74d;
+    --star-cyan: #80deea;
     
-    /* Accent Colors - Electric & Vibrant */
-    --accent-cyan: #00d4ff;
-    --accent-cyan-glow: rgba(0, 212, 255, 0.5);
-    --accent-purple: #9d4edd;
-    --accent-purple-glow: rgba(157, 78, 221, 0.5);
-    --accent-pink: #ff00ff;
-    --accent-pink-glow: rgba(255, 0, 255, 0.4);
-    --accent-orange: #ff6b35;
-    --accent-orange-glow: rgba(255, 107, 53, 0.5);
-    --accent-lime: #39ff14;
-    --accent-lime-glow: rgba(57, 255, 20, 0.4);
+    /* Accent Colors - Tropical & Vibrant */
+    --accent-cyan: #00acc1;
+    --accent-cyan-glow: rgba(0, 172, 193, 0.5);
+    --accent-purple: #5e8a5e;
+    --accent-purple-glow: rgba(94, 138, 94, 0.5);
+    --accent-pink: #ec407a;
+    --accent-pink-glow: rgba(236, 64, 122, 0.4);
+    --accent-orange: #ff9800;
+    --accent-orange-glow: rgba(255, 152, 0, 0.5);
+    --accent-lime: #8bc34a;
+    --accent-lime-glow: rgba(139, 195, 74, 0.4);
     
-    /* Planet Colors */
-    --planet-mercury: #a5a5a5;
-    --planet-venus: #e6c288;
-    --planet-earth: #6b93d6;
+    /* Mayan Stone Colors */
+    --planet-mercury: #8d8d8d;
+    --planet-venus: #d4a574;
+    --planet-earth: #4a7c59;
     --planet-mars: #c1440e;
     --planet-jupiter: #d4a574;
-    --planet-saturn: #fad5a5;
+    --planet-saturn: #c9a66b;
     --planet-uranus: #7de3f4;
-    --planet-neptune: #5b7cff;
+    --planet-neptune: #00838f;
     
     /* Semantic Colors */
-    --text-primary: #f8f9fa;
-    --text-secondary: #adb5bd;
-    --text-muted: #6c757d;
-    --text-dim: #495057;
+    --text-primary: #e8f5e9;
+    --text-secondary: #a5d6a7;
+    --text-muted: #66bb6a;
+    --text-dim: #388e3c;
     
     /* Status Colors */
-    --success: #2a9d8f;
-    --success-glow: rgba(42, 157, 143, 0.4);
-    --warning: #e9c46a;
-    --warning-glow: rgba(233, 196, 106, 0.4);
-    --error: #e63946;
-    --error-glow: rgba(230, 57, 70, 0.4);
-    --info: #457b9d;
-    --info-glow: rgba(69, 123, 157, 0.4);
+    --success: #4caf50;
+    --success-glow: rgba(76, 175, 80, 0.4);
+    --warning: #ffc107;
+    --warning-glow: rgba(255, 193, 7, 0.4);
+    --error: #f44336;
+    --error-glow: rgba(244, 67, 54, 0.4);
+    --info: #00acc1;
+    --info-glow: rgba(0, 172, 193, 0.4);
     
     /* ============================================
-       GRADIENTS - Cosmic Glows
+       GRADIENTS - Jungle Glows
        ============================================ */
-    --gradient-cosmic: linear-gradient(135deg, var(--nebula-purple) 0%, var(--nebula-blue) 50%, var(--nebula-pink) 100%);
+    --gradient-cosmic: linear-gradient(135deg, var(--nebula-purple) 0%, var(--nebula-blue) 50%, var(--nebula-cyan) 100%);
     --gradient-hero: linear-gradient(180deg, var(--void-black) 0%, var(--nebula-purple) 50%, var(--nebula-blue) 100%);
     --gradient-space: linear-gradient(to bottom, var(--void-black), var(--deep-space) 40%, var(--nebula-purple) 100%);
-    --gradient-nebula: radial-gradient(ellipse at 30% 20%, rgba(157, 78, 221, 0.3) 0%, transparent 50%),
-                       radial-gradient(ellipse at 70% 80%, rgba(0, 212, 255, 0.2) 0%, transparent 50%),
-                       radial-gradient(ellipse at 50% 50%, rgba(255, 107, 53, 0.1) 0%, transparent 70%);
-    --gradient-aurora: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple), var(--accent-pink), var(--accent-orange));
+    --gradient-nebula: radial-gradient(ellipse at 30% 20%, rgba(94, 138, 94, 0.3) 0%, transparent 50%),
+                       radial-gradient(ellipse at 70% 80%, rgba(0, 172, 193, 0.2) 0%, transparent 50%),
+                       radial-gradient(ellipse at 50% 50%, rgba(255, 152, 0, 0.1) 0%, transparent 70%);
+    --gradient-aurora: linear-gradient(90deg, var(--accent-cyan), var(--accent-lime), var(--accent-purple), var(--accent-orange));
     --gradient-shine: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
     
     /* ============================================

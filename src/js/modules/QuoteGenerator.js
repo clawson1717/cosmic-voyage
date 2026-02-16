@@ -3,7 +3,7 @@
  * Displays inspirational space quotes with animations
  */
 
-import { spaceQuotes } from '../data/spaceQuotes.js';
+import { spaceQuotes } from '../../data/spaceQuotes.js';
 
 /**
  * QuoteGenerator - Manages the space quote widget
