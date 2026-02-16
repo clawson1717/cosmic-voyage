@@ -61,7 +61,9 @@ class SolarSystem3D {
                     year: '88 Earth days',
                     moons: 0,
                     temp: '167°C avg',
-                    gravity: '3.7 m/s²'
+                    gravity: '3.7 m/s²',
+                    distanceFromSun: '57.9 million km',
+                    funFact: 'A day on Mercury is longer than its year! It takes 59 Earth days to rotate once, but only 88 days to orbit the Sun.'
                 }
             },
             {
@@ -79,7 +81,9 @@ class SolarSystem3D {
                     year: '225 Earth days',
                     moons: 0,
                     temp: '464°C',
-                    gravity: '8.87 m/s²'
+                    gravity: '8.87 m/s²',
+                    distanceFromSun: '108.2 million km',
+                    funFact: 'Venus spins backwards compared to other planets! The Sun rises in the west and sets in the east.'
                 }
             },
             {
@@ -98,7 +102,9 @@ class SolarSystem3D {
                     year: '365.25 days',
                     moons: 1,
                     temp: '15°C avg',
-                    gravity: '9.8 m/s²'
+                    gravity: '9.8 m/s²',
+                    distanceFromSun: '149.6 million km',
+                    funFact: 'Earth is the only planet not named after a god or goddess. Its name comes from Old English "eorþe" meaning ground.'
                 }
             },
             {
@@ -116,7 +122,9 @@ class SolarSystem3D {
                     year: '687 Earth days',
                     moons: 2,
                     temp: '-65°C avg',
-                    gravity: '3.71 m/s²'
+                    gravity: '3.71 m/s²',
+                    distanceFromSun: '227.9 million km',
+                    funFact: 'Mars is home to Olympus Mons, the largest volcano in the solar system at 21 km high and 600 km wide!'
                 }
             },
             {
@@ -134,7 +142,9 @@ class SolarSystem3D {
                     year: '12 Earth years',
                     moons: 95,
                     temp: '-110°C',
-                    gravity: '24.79 m/s²'
+                    gravity: '24.79 m/s²',
+                    distanceFromSun: '778.5 million km',
+                    funFact: 'The Great Red Spot is a storm that has been raging for at least 400 years and is larger than Earth!'
                 }
             },
             {
@@ -153,7 +163,9 @@ class SolarSystem3D {
                     year: '29 Earth years',
                     moons: 146,
                     temp: '-140°C',
-                    gravity: '10.44 m/s²'
+                    gravity: '10.44 m/s²',
+                    distanceFromSun: '1.4 billion km',
+                    funFact: 'Saturn is less dense than water! If you had a bathtub big enough, Saturn would float in it!'
                 }
             },
             {
@@ -171,7 +183,9 @@ class SolarSystem3D {
                     year: '84 Earth years',
                     moons: 27,
                     temp: '-195°C',
-                    gravity: '8.69 m/s²'
+                    gravity: '8.69 m/s²',
+                    distanceFromSun: '2.9 billion km',
+                    funFact: 'Uranus rotates on its side at a 98-degree tilt, making its seasons last 21 years each!'
                 }
             },
             {
@@ -189,7 +203,9 @@ class SolarSystem3D {
                     year: '165 Earth years',
                     moons: 14,
                     temp: '-200°C',
-                    gravity: '11.15 m/s²'
+                    gravity: '11.15 m/s²',
+                    distanceFromSun: '4.5 billion km',
+                    funFact: 'Neptune has the strongest winds in the solar system, reaching speeds of 2,100 km/h (1,300 mph)!'
                 }
             }
         ];
@@ -677,7 +693,65 @@ class SolarSystem3D {
     }
 
     createUI() {
-        // Create info panel overlay
+        // Create modal overlay backdrop
+        const modalBackdrop = document.createElement('div');
+        modalBackdrop.className = 'planet-modal-backdrop';
+        this.container.appendChild(modalBackdrop);
+        this.modalBackdrop = modalBackdrop;
+
+        // Create modal container
+        const modalContainer = document.createElement('div');
+        modalContainer.className = 'planet-modal-container';
+        modalContainer.innerHTML = `
+            <div class="planet-modal">
+                <button class="planet-modal-close" aria-label="Close modal">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 6L6 18M6 6l12 12"/>
+                    </svg>
+                </button>
+                <div class="planet-modal-header">
+                    <div class="planet-modal-icon"></div>
+                    <h3 class="planet-modal-title">Select a Planet</h3>
+                    <p class="planet-modal-subtitle">Click on any planet to explore</p>
+                </div>
+                <div class="planet-modal-content">
+                    <div class="planet-modal-stats">
+                        <div class="stat-row">
+                            <span class="stat-icon">☀️</span>
+                            <div class="stat-info">
+                                <span class="stat-label">Distance from Sun</span>
+                                <span class="stat-value" id="modal-distance">—</span>
+                            </div>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-icon">📏</span>
+                            <div class="stat-info">
+                                <span class="stat-label">Diameter</span>
+                                <span class="stat-value" id="modal-diameter">—</span>
+                            </div>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-icon">🌙</span>
+                            <div class="stat-info">
+                                <span class="stat-label">Moons</span>
+                                <span class="stat-value" id="modal-moons">—</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="planet-modal-funfact">
+                        <div class="funfact-header">
+                            <span class="funfact-icon">💡</span>
+                            <span class="funfact-title">Did You Know?</span>
+                        </div>
+                        <p class="funfact-text" id="modal-funfact">Select a planet to discover amazing facts about our solar system!</p>
+                    </div>
+                </div>
+            </div>
+        `;
+        this.container.appendChild(modalContainer);
+        this.modalContainer = modalContainer;
+
+        // Create legacy info panel overlay (keep for backwards compatibility)
         const infoPanel = document.createElement('div');
         infoPanel.className = 'planet-info-overlay';
         infoPanel.innerHTML = `
@@ -806,6 +880,19 @@ class SolarSystem3D {
         this.renderer.domElement.addEventListener('click', (e) => this.onMouseClick(e));
         this.renderer.domElement.addEventListener('mousemove', (e) => this.onMouseMove(e));
 
+        // Modal close button
+        const modalCloseBtn = this.modalContainer.querySelector('.planet-modal-close');
+        if (modalCloseBtn) {
+            modalCloseBtn.addEventListener('click', () => {
+                this.closePlanetModal();
+            });
+        }
+
+        // Close modal on backdrop click
+        this.modalBackdrop.addEventListener('click', () => {
+            this.closePlanetModal();
+        });
+
         // UI controls
         this.infoPanel.querySelector('.close-panel').addEventListener('click', () => {
             this.closeInfoPanel();
@@ -857,6 +944,7 @@ class SolarSystem3D {
 
         switch (e.key) {
             case 'Escape':
+                this.closePlanetModal();
                 this.closeInfoPanel();
                 break;
             case ' ':
@@ -967,6 +1055,11 @@ class SolarSystem3D {
     }
 
     onMouseClick(event) {
+        // Don't process click if modal is open (let modal handle its own clicks)
+        if (this.modalContainer && this.modalContainer.classList.contains('active')) {
+            return;
+        }
+
         const rect = this.renderer.domElement.getBoundingClientRect();
         this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
         this.mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
@@ -981,6 +1074,7 @@ class SolarSystem3D {
             const planet = intersects[0].object;
             this.selectPlanet(planet);
         } else {
+            this.closePlanetModal();
             this.closeInfoPanel();
         }
     }
@@ -1005,8 +1099,8 @@ class SolarSystem3D {
         // Focus camera on planet
         this.focusOnObject(planet);
 
-        // Update info panel
-        this.showInfoPanel(data);
+        // Open planet modal with GSAP animations
+        this.openPlanetModal(data);
 
         // Highlight effect
         this.planets.forEach(p => {
@@ -1120,6 +1214,118 @@ class SolarSystem3D {
 
     closeInfoPanel() {
         this.infoPanel.classList.remove('active');
+        this.closePlanetModal();
+    }
+
+    openPlanetModal(data) {
+        const modal = this.modalContainer;
+        const backdrop = this.modalBackdrop;
+        
+        // Update modal content
+        const titleEl = modal.querySelector('.planet-modal-title');
+        const subtitleEl = modal.querySelector('.planet-modal-subtitle');
+        const iconEl = modal.querySelector('.planet-modal-icon');
+        const distanceEl = modal.querySelector('#modal-distance');
+        const diameterEl = modal.querySelector('#modal-diameter');
+        const moonsEl = modal.querySelector('#modal-moons');
+        const funFactEl = modal.querySelector('#modal-funfact');
+
+        if (titleEl) titleEl.textContent = data.name;
+        if (subtitleEl) subtitleEl.textContent = data.description;
+        if (iconEl) {
+            // Set color accent based on planet
+            const planetColors = {
+                'Mercury': '#8C8C8C',
+                'Venus': '#E6E6B8',
+                'Earth': '#2233AA',
+                'Mars': '#C1440E',
+                'Jupiter': '#D4A574',
+                'Saturn': '#FAD5A5',
+                'Uranus': '#7DE3F4',
+                'Neptune': '#5B7CFF'
+            };
+            iconEl.style.backgroundColor = planetColors[data.name] || '#00d4ff';
+        }
+        if (distanceEl) distanceEl.textContent = data.details.distanceFromSun || '—';
+        if (diameterEl) diameterEl.textContent = data.details.diameter || '—';
+        if (moonsEl) moonsEl.textContent = data.details.moons !== undefined ? data.details.moons : '—';
+        if (funFactEl) funFactEl.textContent = data.details.funFact || 'No fun fact available.';
+
+        // Show modal and backdrop with GSAP animations
+        modal.style.display = 'flex';
+        backdrop.style.display = 'block';
+
+        // Use GSAP for smooth animations if available
+        if (typeof gsap !== 'undefined') {
+            // Animate backdrop
+            gsap.fromTo(backdrop, 
+                { opacity: 0 },
+                { opacity: 1, duration: 0.3, ease: 'power2.out' }
+            );
+
+            // Animate modal container
+            gsap.fromTo(modal,
+                { opacity: 0, scale: 0.8, y: 30 },
+                { opacity: 1, scale: 1, y: 0, duration: 0.4, ease: 'back.out(1.7)' }
+            );
+
+            // Stagger animate content elements
+            gsap.fromTo(modal.querySelectorAll('.stat-row'),
+                { opacity: 0, x: -20 },
+                { opacity: 1, x: 0, duration: 0.3, stagger: 0.1, delay: 0.2, ease: 'power2.out' }
+            );
+
+            gsap.fromTo(modal.querySelector('.planet-modal-funfact'),
+                { opacity: 0, y: 20 },
+                { opacity: 1, y: 0, duration: 0.4, delay: 0.4, ease: 'power2.out' }
+            );
+        } else {
+            // Fallback if GSAP not loaded
+            backdrop.style.opacity = '1';
+            modal.style.opacity = '1';
+        }
+
+        // Add active class for CSS transitions as fallback
+        modal.classList.add('active');
+        backdrop.classList.add('active');
+    }
+
+    closePlanetModal() {
+        const modal = this.modalContainer;
+        const backdrop = this.modalBackdrop;
+
+        if (typeof gsap !== 'undefined') {
+            // Animate modal out
+            gsap.to(modal, {
+                opacity: 0,
+                scale: 0.9,
+                y: 20,
+                duration: 0.25,
+                ease: 'power2.in',
+                onComplete: () => {
+                    modal.style.display = 'none';
+                    modal.classList.remove('active');
+                }
+            });
+
+            // Animate backdrop out
+            gsap.to(backdrop, {
+                opacity: 0,
+                duration: 0.2,
+                ease: 'power2.in',
+                onComplete: () => {
+                    backdrop.style.display = 'none';
+                    backdrop.classList.remove('active');
+                }
+            });
+        } else {
+            // Fallback
+            modal.style.display = 'none';
+            modal.classList.remove('active');
+            backdrop.style.display = 'none';
+            backdrop.classList.remove('active');
+        }
+
         this.selectedPlanet = null;
 
         // Reset planet highlighting
@@ -1213,6 +1419,14 @@ class SolarSystem3D {
 
         if (this.helpPanel) {
             this.container.removeChild(this.helpPanel);
+        }
+
+        if (this.modalContainer) {
+            this.container.removeChild(this.modalContainer);
+        }
+
+        if (this.modalBackdrop) {
+            this.container.removeChild(this.modalBackdrop);
         }
     }
 }
